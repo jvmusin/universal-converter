@@ -3,16 +3,16 @@ package jvmusin.universalconverter.web
 import com.fasterxml.jackson.module.kotlin.jsonMapper
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
-import jvmusin.universalconverter.MeasurementConverterFactoryImpl
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.MockMvcResultMatchersDsl
 import org.springframework.test.web.servlet.post
+import java.util.*
 
 @Import(TestMeasurements::class)
-@WebMvcTest(Controller::class, MeasurementConverterFactoryImpl::class)
+@WebMvcTest(Controller::class)
 class EndpointTests(private val mockMvc: MockMvc) : StringSpec() {
 
     private fun convert(from: String, to: String, expect: MockMvcResultMatchersDsl.() -> Unit) =
@@ -29,14 +29,14 @@ class EndpointTests(private val mockMvc: MockMvc) : StringSpec() {
         "На м/c в км/час возвращает код 200 и результат 3.6" {
             convert("м / с", "км / час") {
                 status { isOk() }
-                content { string("%.15f".format(3.6)) }
+                content { string("%.15f".format(Locale.ENGLISH, 3.6)) }
             }
         }
 
         "На приведение километров к метрам возвращается результат 1000" {
             convert("км", "м") {
                 status { isOk() }
-                content { "%.15f".format(1000.0) }
+                content { "%.15f".format(Locale.ENGLISH, 1000.0) }
             }
         }
 

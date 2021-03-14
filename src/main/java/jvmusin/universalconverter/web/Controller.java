@@ -1,9 +1,8 @@
 package jvmusin.universalconverter.web;
 
-import jvmusin.universalconverter.ComplexFraction;
-import jvmusin.universalconverter.MeasurementConverter;
+import jvmusin.universalconverter.converter.MeasurementConverter;
+import jvmusin.universalconverter.fraction.ComplexFraction;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,14 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
  * Обрабатывает запросы на единственном пути {@code /convert}.
  */
 @RestController
-@Log4j2
 @RequiredArgsConstructor
 public class Controller {
 
     /**
      * Конвертер, используемый для подсчёта соотношения единиц измерения из запросов.
      */
-    private final MeasurementConverter<String> converter;
+    private final MeasurementConverter<?> converter;
 
     /**
      * Обрабатывает запросы на пути {@code /convert}. Конвертирует единицы измерения, предоставленные в теле запроса.
@@ -33,16 +31,15 @@ public class Controller {
      * <p>
      * Если запрос обработан успешно,
      * возвращает код {@code 200 OK} с коэффициентом соотношения
-     * дроби {@code req.from} к {@code req.to} с точностью в 15 знаков в теле ответа.
+     * дроби {@code req.from} к {@code req.to} с точностью в 15 значащих цифр в теле ответа.
      *
-     * @param req тело запроса с единицами измерения, из какой единицы нужно конвертировать и в какую
-     * @return коэффициент соотношения дроби {@code req.from} к {@code req.to} с точностью в 15 знаков
+     * @param req тело запроса с единицами измерения, из какой единицы нужно конвертировать и в какую.
+     * @return Коэффициент соотношения дроби {@code req.from} к {@code req.to}.
      */
     @PostMapping("/convert")
     public String convert(@RequestBody ConvertMeasurementValuesRequest req) {
         ComplexFraction<String> from = req.fromFraction();
         ComplexFraction<String> to = req.toFraction();
-        double result = converter.convert(from, to);
-        return String.format("%.15f", result);
+        return converter.convert(from, to).toString();
     }
 }

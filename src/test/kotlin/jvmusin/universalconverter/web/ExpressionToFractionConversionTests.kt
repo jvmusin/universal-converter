@@ -3,16 +3,13 @@ package jvmusin.universalconverter.web
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.property.checkAll
-import io.kotest.property.exhaustive.exhaustive
-import jvmusin.universalconverter.ComplexFraction
+import jvmusin.universalconverter.fraction.ComplexFraction
 import jvmusin.universalconverter.web.WebUtils.convertExpressionToFraction
 
 class ExpressionToFractionConversionTests : StringSpec({
     "Хорошие дроби парсятся верно" {
-        convertExpressionToFraction("м / с") shouldBe ComplexFraction(listOf("м"), listOf("с"))
-        convertExpressionToFraction("м / с") shouldBe ComplexFraction(listOf("м"), listOf("с"))
         convertExpressionToFraction("") shouldBe ComplexFraction(emptyList(), emptyList())
+        convertExpressionToFraction("м / с") shouldBe ComplexFraction(listOf("м"), listOf("с"))
         convertExpressionToFraction("кг * м / с * с") shouldBe ComplexFraction(listOf("кг", "м"), listOf("с", "с"))
         convertExpressionToFraction("кг") shouldBe ComplexFraction(listOf("кг"), emptyList())
         convertExpressionToFraction("1") shouldBe ComplexFraction(emptyList(), emptyList())
@@ -22,12 +19,18 @@ class ExpressionToFractionConversionTests : StringSpec({
         convertExpressionToFraction("1/м*с") shouldBe ComplexFraction(emptyList(), listOf("м", "с"))
     }
 
+    "На null бросается IllegalArgumentException" {
+        shouldThrow<IllegalArgumentException> { convertExpressionToFraction(null) }
+    }
+
     "Плохие дроби не парсятся" {
-        val tests = listOf(
+        val badRationals = listOf(
             "/", "/с", "с/", "м//м", "м**м", "*", "*м", "м*", "*м*", "*м*м", "м*м/*м", "м*/м*м", "1/", "/1"
         )
-        tests.exhaustive().checkAll { s ->
-            shouldThrow<MalformedExpressionException> { convertExpressionToFraction(s) }
+        for (rational in badRationals) {
+            shouldThrow<MalformedExpressionException> {
+                convertExpressionToFraction(rational)
+            }
         }
     }
 })

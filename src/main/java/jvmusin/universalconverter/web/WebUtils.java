@@ -1,6 +1,7 @@
 package jvmusin.universalconverter.web;
 
-import jvmusin.universalconverter.ComplexFraction;
+import jvmusin.universalconverter.fraction.ComplexFraction;
+import org.springframework.util.Assert;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -12,11 +13,13 @@ public class WebUtils {
     /**
      * Конвертирует выражение из запроса на конвертацию в дробь {@link ComplexFraction}.
      *
-     * @param expression выражение, которое необходимо конвертировать
-     * @return дробь, соответствующую выражению
-     * @throws MalformedExpressionException если не удалось конвертировать выражение
+     * @param expression выражение, которое необходимо конвертировать.
+     * @return Дробь, соответствующую выражению.
+     * @throws IllegalArgumentException если выражение равно {@code null}.
+     * @throws MalformedExpressionException если не удалось конвертировать выражение.
      */
     public static ComplexFraction<String> convertExpressionToFraction(String expression) {
+        Assert.notNull(expression, "Выражение не может быть равно null");
         if (expression.contains(" ")) return convertExpressionToFraction(expression.replace(" ", ""));
         if (expression.isEmpty() || expression.equals("1")) return new ComplexFraction<>(emptyList(), emptyList());
 
