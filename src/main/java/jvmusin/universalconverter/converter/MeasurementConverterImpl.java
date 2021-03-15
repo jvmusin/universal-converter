@@ -14,7 +14,6 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
-import static java.text.MessageFormat.format;
 import static java.util.Comparator.comparing;
 import static jvmusin.universalconverter.ListUtils.mergeLists;
 
@@ -68,7 +67,7 @@ public class MeasurementConverterImpl<TWeight extends Number<TWeight>>
    *
    * @param measurement величина измерения, для которой нужно вернуть индекс сети, которой она
    *     принадлежит.
-   * @return Индекс сети, которой принадлежит {@code measurement}.
+   * @return Индекс сети, которой принадлежит величина измерения {@code measurement}.
    * @throws NoSuchMeasurementException если такой единицы измерения нет ни в одной известной сети.
    */
   private int getNetworkIndex(String measurement) {
@@ -91,17 +90,18 @@ public class MeasurementConverterImpl<TWeight extends Number<TWeight>>
    *     сетям.
    */
   private TWeight convert(String numerator, String denominator) {
-    int networkNumIndex = getNetworkIndex(numerator);
-    int networkDenIndex = getNetworkIndex(denominator);
-    if (networkNumIndex != networkDenIndex) {
-      Fraction<String> fraction = new Fraction<>(numerator, denominator);
+    int numeratorNetworkIndex = getNetworkIndex(numerator);
+    int denominatorNetworkIndex = getNetworkIndex(denominator);
+    if (numeratorNetworkIndex != denominatorNetworkIndex) {
       throw new ConversionException(
-          MessageFormat.format("Невозможно конвертировать дробь {0} в коэффициент", fraction));
+          MessageFormat.format(
+              "Невозможно конвертировать дробь {0} в коэффициент",
+              new Fraction<>(numerator, denominator)));
     }
-    ConversionNetwork<TWeight> network = networks.get(networkNumIndex);
-    return network
-        .convertToCoefficient(numerator)
-        .divideBy(network.convertToCoefficient(denominator));
+    ConversionNetwork<TWeight> network = networks.get(numeratorNetworkIndex);
+    TWeight nominatorCoefficient = network.convertToCoefficient(numerator);
+    TWeight denominatorCoefficient = network.convertToCoefficient(denominator);
+    return nominatorCoefficient.divideBy(denominatorCoefficient);
   }
 
   /**
@@ -183,7 +183,8 @@ public class MeasurementConverterImpl<TWeight extends Number<TWeight>>
       return convert(numerator, denominator);
     } catch (Exception e) {
       String msg =
-          format("Не удалось конвертировать дробь {0} в {1}: {2}", from, to, e.getMessage(), e);
+          MessageFormat.format(
+              "Не удалось конвертировать дробь {0} в {1}: {2}", from, to, e.getMessage(), e);
       throw new ConversionException(msg, e);
     }
   }

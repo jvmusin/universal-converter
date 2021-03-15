@@ -6,6 +6,9 @@ import java.math.BigInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.math.BigInteger.ONE;
+import static java.math.BigInteger.ZERO;
+
 /** Фабрика, используемая для создания чисел типа {@link BigIntFractionNumber}. */
 public class BigIntFractionNumberFactory implements NumberFactory<BigIntFractionNumber> {
   private static final Pattern NUMBER_PATTERN =
@@ -13,7 +16,7 @@ public class BigIntFractionNumberFactory implements NumberFactory<BigIntFraction
 
   @Override
   public BigIntFractionNumber one() {
-    return new BigIntFractionNumber(BigInteger.ONE, BigInteger.ONE);
+    return new BigIntFractionNumber(ONE, ONE);
   }
 
   /**
@@ -46,9 +49,8 @@ public class BigIntFractionNumberFactory implements NumberFactory<BigIntFraction
     String afterDot = matcher.group("after");
     BigInteger shift = BigInteger.TEN.pow(afterDot == null ? 0 : afterDot.length());
 
-    BigInteger before = beforeDot.isEmpty() ? BigInteger.ZERO : new BigInteger(beforeDot);
-    BigInteger after =
-        afterDot == null || afterDot.isEmpty() ? BigInteger.ZERO : new BigInteger(afterDot);
+    BigInteger before = beforeDot.isEmpty() ? ZERO : new BigInteger(beforeDot);
+    BigInteger after = afterDot == null || afterDot.isEmpty() ? ZERO : new BigInteger(afterDot);
 
     return new BigIntFractionNumber(before.multiply(shift).add(after), shift);
   }

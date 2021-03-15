@@ -3,6 +3,7 @@ package jvmusin.universalconverter.fraction;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -20,10 +21,7 @@ public class ComplexFraction<T> extends Fraction<List<T>> {
 
   @Override
   public String toString() {
-    return "ComplexFraction(numerator="
-        + getNumerator()
-        + ", denominator="
-        + getDenominator()
-        + ")";
+    return MessageFormat.format(
+        "ComplexFraction(numerator={0}, denominator={1})", getNumerator(), getDenominator());
   }
 }

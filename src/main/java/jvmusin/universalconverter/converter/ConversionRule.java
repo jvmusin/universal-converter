@@ -17,8 +17,8 @@ public class ConversionRule<TWeight extends Number<TWeight>> {
   private final TWeight smallPieceCount;
 
   /**
-   * Создаёт обратное правило (из 'меньшей' величины в 'большую') с коэффициентом {@code 1 /
-   * smallPieceCount}.
+   * Создаёт обратное правило (из 'меньшей' величины в 'большую') с коэффициентом {@code
+   * 1/smallPieceCount}.
    *
    * @return Обратное правило.
    */

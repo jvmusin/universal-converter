@@ -1,14 +1,12 @@
 package jvmusin.universalconverter.converter;
 
-import jvmusin.universalconverter.ListUtils;
 import jvmusin.universalconverter.number.Number;
 import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
+import static jvmusin.universalconverter.ListUtils.*;
 
 public class MeasurementConverterUtils {
   /**
@@ -25,7 +23,7 @@ public class MeasurementConverterUtils {
    *   <li>{@code b->c 4}.
    * </ul>
    *
-   * То графе конвертации будет выглядтель следующим образом:
+   * То в графе конвертации будет выглядтель следующим образом:
    *
    * <ul>
    *   <li>{@code a}: [a->b 2]
@@ -45,9 +43,8 @@ public class MeasurementConverterUtils {
           List<ConversionRule<TWeight>> rules) {
     Assert.notNull(rules, "Список правил не может быть равен null");
     Assert.noNullElements(rules, "Список правил не может содержать null");
-    List<ConversionRule<TWeight>> inverseRules =
-        rules.stream().map(ConversionRule::inverse).collect(toList());
-    return ListUtils.mergeLists(rules, inverseRules).stream()
-        .collect(groupingBy(ConversionRule::getBigPiece));
+    List<ConversionRule<TWeight>> inverseRules = mapList(rules, ConversionRule::inverse);
+    List<ConversionRule<TWeight>> allRules = mergeLists(rules, inverseRules);
+    return groupList(allRules, ConversionRule::getBigPiece);
   }
 }

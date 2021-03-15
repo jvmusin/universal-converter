@@ -116,7 +116,7 @@ public class BigIntFractionNumber implements Number<BigIntFractionNumber> {
   public String toString() {
     // TODO test it
     MathContext mc = MathContext.DECIMAL128;
-    BigDecimal d = new BigDecimal(numerator, mc).divide(new BigDecimal(denominator, mc), mc);
+    BigDecimal d = new BigDecimal(numerator).divide(new BigDecimal(denominator), mc);
     return String.format(Locale.ENGLISH, "%f", d);
     //        String result = d.toPlainString();
     //        return result.replace(',', '.');

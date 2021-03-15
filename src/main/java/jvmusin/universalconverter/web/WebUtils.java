@@ -13,6 +13,8 @@ public class WebUtils {
   /**
    * Конвертирует выражение из запроса на конвертацию в дробь {@link ComplexFraction}.
    *
+   * <p>Игнорирует все пробелы в выражении.
+   *
    * @param expression выражение, которое необходимо конвертировать.
    * @return Дробь, соответствующую выражению.
    * @throws IllegalArgumentException если выражение равно {@code null}.
@@ -24,12 +26,12 @@ public class WebUtils {
     if (expression.isEmpty() || expression.equals("1"))
       return new ComplexFraction<>(emptyList(), emptyList());
 
-    int[] pos =
+    int[] delimiterPositions =
         IntStream.range(0, expression.length()).filter(i -> expression.charAt(i) == '/').toArray();
-    switch (pos.length) {
+    switch (delimiterPositions.length) {
       case 0:
         {
-          String[] parts = expression.split("\\*", -1);
+          String[] parts = expression.split("[*]", -1);
           if (Arrays.stream(parts).anyMatch(String::isEmpty)) {
             throw new MalformedExpressionException(
                 "Выражение имеет знак умножения, "
@@ -40,15 +42,16 @@ public class WebUtils {
         }
       case 1:
         {
-          String[] parts = expression.split("/", -1);
-          String a = parts[0], b = parts[1];
-          if (a.isEmpty() || b.isEmpty()) {
+          int delimiterPosition = delimiterPositions[0];
+          String numerator = expression.substring(0, delimiterPosition);
+          String denominator = expression.substring(delimiterPosition + 1);
+          if (numerator.isEmpty() || denominator.isEmpty()) {
             throw new MalformedExpressionException(
                 "Знак деления должен разделять две непустые части: " + expression);
           }
           return new ComplexFraction<>(
-              convertExpressionToFraction(a).getNumerator(),
-              convertExpressionToFraction(b).getNumerator());
+              convertExpressionToFraction(numerator).getNumerator(),
+              convertExpressionToFraction(denominator).getNumerator());
         }
       default:
         {

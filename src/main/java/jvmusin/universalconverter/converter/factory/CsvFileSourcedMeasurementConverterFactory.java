@@ -10,10 +10,11 @@ import org.springframework.util.Assert;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -29,6 +30,13 @@ public class CsvFileSourcedMeasurementConverterFactory<TWeight extends Number<TW
 
   public static final String MORE_THAN_THREE_TOKENS_MESSAGE = "Строка состоит не из трёх токенов";
   public static final String EMPTY_TOKEN_MESSAGE = "В строке не должно быть пустых токенов";
+
+  /** Проверяет строки {@code .csv} файла на корректность. */
+  private static final Consumer<String[]> validateRows =
+      row -> {
+        Assert.isTrue(row.length == 3, MORE_THAN_THREE_TOKENS_MESSAGE);
+        Assert.isTrue(stream(row).noneMatch(String::isEmpty), EMPTY_TOKEN_MESSAGE);
+      };
 
   public CsvFileSourcedMeasurementConverterFactory(NumberFactory<TWeight> weightFactory) {
     super(weightFactory);
@@ -64,11 +72,7 @@ public class CsvFileSourcedMeasurementConverterFactory<TWeight extends Number<TW
               .peek(log::debug)
               .filter(line -> !line.isBlank())
               .map(line -> line.split(","))
-              .peek(row -> Assert.isTrue(row.length == 3, MORE_THAN_THREE_TOKENS_MESSAGE))
-              .peek(
-                  row ->
-                      Assert.isTrue(
-                          Arrays.stream(row).noneMatch(String::isEmpty), EMPTY_TOKEN_MESSAGE))
+              .peek(validateRows)
               .map(row -> new ConversionRule<>(row[0], row[1], weightFactory.parse(row[2])))
               .collect(toList());
       return create(rules);
