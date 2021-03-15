@@ -19,12 +19,13 @@ public class BigIntFractionNumberFactory implements NumberFactory<BigIntFraction
    * Парсит строку в дробь.
    *
    * <p>Если строка равна {@code null}, то выбрасывается {@link IllegalArgumentException}. Иначе
-   * парсит строку через создание {@link BigDecimal}.
+   * парсит строку через конструктор {@link BigDecimal#BigDecimal(String) BigDecimal(String)}.
    *
    * @param s строка для парсинга в дробь.
    * @return Спарсенную из строки дробь.
    * @throws IllegalArgumentException если строка {@code s == null}.
    * @throws NumberFormatException если число спарсить не удалось.
+   * @see BigDecimal#BigDecimal(String) BigDecimal(String)
    */
   @Override
   public BigIntFractionNumber parse(String s) {
