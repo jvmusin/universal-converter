@@ -1,12 +1,11 @@
 package jvmusin.universalconverter.number;
 
-import org.springframework.util.Assert;
+import static java.math.BigInteger.ONE;
+import static java.math.BigInteger.TEN;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
-import static java.math.BigInteger.ONE;
-import static java.math.BigInteger.TEN;
+import org.springframework.util.Assert;
 
 /** Фабрика, используемая для создания чисел типа {@link BigIntFractionNumber}. */
 public class BigIntFractionNumberFactory implements NumberFactory<BigIntFractionNumber> {
@@ -19,8 +18,8 @@ public class BigIntFractionNumberFactory implements NumberFactory<BigIntFraction
   /**
    * Парсит строку в дробь.
    *
-   * Если строка равна {@code null}, то выбрасывается {@link IllegalArgumentException}.
-   * Иначе парсит строку через создание {@link BigDecimal}.
+   * <p>Если строка равна {@code null}, то выбрасывается {@link IllegalArgumentException}. Иначе
+   * парсит строку через создание {@link BigDecimal}.
    *
    * @param s строка для парсинга в дробь.
    * @return Спарсенную из строки дробь.

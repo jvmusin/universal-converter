@@ -1,13 +1,12 @@
 package jvmusin.universalconverter.web;
 
-import jvmusin.universalconverter.fraction.ComplexFraction;
-import org.springframework.util.Assert;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
-
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
+import jvmusin.universalconverter.fraction.ComplexFraction;
+import org.springframework.util.Assert;
 
 public class WebUtils {
   /**

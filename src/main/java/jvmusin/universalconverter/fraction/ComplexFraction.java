@@ -1,10 +1,9 @@
 package jvmusin.universalconverter.fraction;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import java.text.MessageFormat;
 import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Класс, описывающий дробь, где числителем и знаменателем являются списки элементов типа {@code T}.

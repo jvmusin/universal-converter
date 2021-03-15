@@ -1,8 +1,7 @@
 package jvmusin.universalconverter.number;
 
-import lombok.Data;
-
 import java.util.Locale;
+import lombok.Data;
 
 /** Число, представляемое как {@code double} внутри. */
 @Data

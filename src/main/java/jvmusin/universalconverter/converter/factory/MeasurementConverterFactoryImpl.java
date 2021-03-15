@@ -1,17 +1,16 @@
 package jvmusin.universalconverter.converter.factory;
 
-import jvmusin.universalconverter.converter.MeasurementConverterUtils;
-import jvmusin.universalconverter.converter.network.ConversionNetwork;
+import java.util.*;
 import jvmusin.universalconverter.converter.ConversionRule;
 import jvmusin.universalconverter.converter.MeasurementConverter;
 import jvmusin.universalconverter.converter.MeasurementConverterImpl;
+import jvmusin.universalconverter.converter.MeasurementConverterUtils;
 import jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
+import jvmusin.universalconverter.converter.network.ConversionNetwork;
 import jvmusin.universalconverter.number.Number;
 import jvmusin.universalconverter.number.NumberFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.Assert;
-
-import java.util.*;
 
 /**
  * Фабрика, используемая для создания {@link MeasurementConverter}.

@@ -1,14 +1,13 @@
 package jvmusin.universalconverter;
 
-import org.springframework.util.Assert;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
+import org.springframework.util.Assert;
 
 public class ListUtils {
   /**

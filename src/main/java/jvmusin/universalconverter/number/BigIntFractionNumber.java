@@ -1,11 +1,10 @@
 package jvmusin.universalconverter.number;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.Locale;
+import lombok.Data;
 
 /**
  * Дробь на {@link BigInteger} значениях.

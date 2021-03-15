@@ -1,5 +1,13 @@
 package jvmusin.universalconverter.converter.factory;
 
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 import jvmusin.universalconverter.converter.ConversionRule;
 import jvmusin.universalconverter.converter.MeasurementConverter;
 import jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
@@ -7,15 +15,6 @@ import jvmusin.universalconverter.number.Number;
 import jvmusin.universalconverter.number.NumberFactory;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.Assert;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
-
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Фабрика, используемая для создания {@link MeasurementConverter} из правил в {@code .csv} файле.

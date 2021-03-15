@@ -1,5 +1,9 @@
 package jvmusin.universalconverter.converter.network;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import jvmusin.universalconverter.converter.ConversionRule;
 import jvmusin.universalconverter.converter.exception.NoSuchMeasurementException;
 import jvmusin.universalconverter.converter.network.exception.ConversionNetworkBuildException;
@@ -8,11 +12,6 @@ import jvmusin.universalconverter.converter.network.exception.NonPositiveWeightR
 import jvmusin.universalconverter.number.Number;
 import jvmusin.universalconverter.number.NumberFactory;
 import lombok.RequiredArgsConstructor;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Сеть величин измерения.
