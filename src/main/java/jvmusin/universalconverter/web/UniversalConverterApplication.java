@@ -1,10 +1,14 @@
 package jvmusin.universalconverter.web;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.nio.file.Paths;
 import java.util.Map;
 import jvmusin.universalconverter.converter.MeasurementConverter;
 import jvmusin.universalconverter.converter.factory.CsvFileSourcedMeasurementConverterFactory;
-import jvmusin.universalconverter.number.BigIntFractionNumberFactory;
+import jvmusin.universalconverter.number.BigDecimalNumberFactory;
+import jvmusin.universalconverter.number.BigDecimalNumberProperties;
 import jvmusin.universalconverter.number.Number;
 import jvmusin.universalconverter.number.NumberFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,9 +76,30 @@ public class UniversalConverterApplication {
    *
    * @return Фабрику чисел, используемых в качестве веса в конвертере.
    */
+  @SuppressWarnings("CommentedOutCode")
   @Bean
   public NumberFactory<?> numberFactory() {
-    return new BigIntFractionNumberFactory();
-    //        return new DoubleNumberFactory();
+    return bigDecimalNumberFactory(300, 20);
+    // return new BigIntFractionNumberFactory();
+    // return new DoubleNumberFactory();
+  }
+
+  /**
+   * Создаёт фабрику {@link BigDecimalNumberFactory}.
+   *
+   * <p>Получающиеся {@link BigDecimal} будут содержать {@code digits} значащих цифр, а два значения
+   * будут равны, если они отличаются не больее, чем на <code>10<sup>comparingDigits</sup></code>
+   *
+   * @param digits количество значащих цифр, хранящихся в числах, создаваемых фабрикой.
+   * @param comparingDigits количество значащих цифр, которые должны совпадать у двух чисел, чтобы
+   *     те были равны.
+   * @return Фабрику {@link BigDecimalNumberFactory}.
+   */
+  @SuppressWarnings("SameParameterValue")
+  private BigDecimalNumberFactory bigDecimalNumberFactory(int digits, int comparingDigits) {
+    MathContext mc = new MathContext(digits, RoundingMode.HALF_EVEN);
+    BigDecimal diff = BigDecimal.ONE.movePointLeft(comparingDigits);
+    BigDecimalNumberProperties props = new BigDecimalNumberProperties(mc, diff);
+    return new BigDecimalNumberFactory(props);
   }
 }
