@@ -14,12 +14,16 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class ComplexFraction<T> extends Fraction<List<T>> {
-    public ComplexFraction(List<T> numerator, List<T> denominator) {
-        super(numerator, denominator);
-    }
+  public ComplexFraction(List<T> numerator, List<T> denominator) {
+    super(numerator, denominator);
+  }
 
-    @Override
-    public String toString() {
-        return "ComplexFraction(numerator=" + getNumerator() + ", denominator=" + getDenominator() + ")";
-    }
+  @Override
+  public String toString() {
+    return "ComplexFraction(numerator="
+        + getNumerator()
+        + ", denominator="
+        + getDenominator()
+        + ")";
+  }
 }
