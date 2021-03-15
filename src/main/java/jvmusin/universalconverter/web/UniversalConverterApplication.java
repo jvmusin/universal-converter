@@ -88,7 +88,7 @@ public class UniversalConverterApplication {
    * Создаёт фабрику {@link BigDecimalNumberFactory}.
    *
    * <p>Получающиеся {@link BigDecimal} будут содержать {@code digits} значащих цифр, а два значения
-   * будут равны, если они отличаются не больее, чем на <code>10<sup>comparingDigits</sup></code>
+   * будут равны, если они отличаются не более, чем на <code>10<sup>comparingDigits</sup></code>.
    *
    * @param digits количество значащих цифр, хранящихся в числах, создаваемых фабрикой.
    * @param comparingDigits количество значащих цифр, которые должны совпадать у двух чисел, чтобы
