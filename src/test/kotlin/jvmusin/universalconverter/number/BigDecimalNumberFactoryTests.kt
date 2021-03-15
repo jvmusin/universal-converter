@@ -16,7 +16,7 @@ class BigDecimalNumberFactoryTests : BehaviorSpec() {
     init {
         Given("one") {
             When("вызван") {
-                Then("возвращает 1 с теми же props") {
+                Then("возвращает 1") {
                     factory.one() shouldBe BigDecimalNumber(ONE, props)
                 }
             }
