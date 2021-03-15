@@ -3,6 +3,7 @@ package jvmusin.universalconverter.fraction;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -14,12 +15,13 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class ComplexFraction<T> extends Fraction<List<T>> {
-    public ComplexFraction(List<T> numerator, List<T> denominator) {
-        super(numerator, denominator);
-    }
+  public ComplexFraction(List<T> numerator, List<T> denominator) {
+    super(numerator, denominator);
+  }
 
-    @Override
-    public String toString() {
-        return "ComplexFraction(numerator=" + getNumerator() + ", denominator=" + getDenominator() + ")";
-    }
+  @Override
+  public String toString() {
+    return MessageFormat.format(
+        "ComplexFraction(numerator={0}, denominator={1})", getNumerator(), getDenominator());
+  }
 }
