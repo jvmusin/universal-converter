@@ -1,8 +1,10 @@
 package jvmusin.universalconverter.converter.network;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import jvmusin.universalconverter.converter.ConversionRule;
 import jvmusin.universalconverter.converter.exception.NoSuchMeasurementException;
@@ -11,6 +13,7 @@ import jvmusin.universalconverter.converter.network.exception.InfinitelyIncreasi
 import jvmusin.universalconverter.converter.network.exception.NonPositiveWeightRuleException;
 import jvmusin.universalconverter.number.Number;
 import jvmusin.universalconverter.number.NumberFactory;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -96,46 +99,69 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
      */
     private final Map<String, TWeight> weights = new HashMap<>();
 
+    /** Очередь, которой пользуется метод {@link #build()} при обходе в ширину. */
+    private final Queue<MeasurementNode> queue = new ArrayDeque<>();
+
     /**
-     * Рекурсивно строит сеть величин измерения, содержащую элемент {@code root}. Если в сети есть
-     * некорректные правила конвертации, выбрасывается {@link ConversionNetworkBuildException}.
-     * После построения сети все итоговые веса будут лежать в {@link #weights}.
+     * Сохраняет вес величины измерения.
      *
-     * @param measurement текущая величина измерения.
-     * @param weight вес текущей величины измерения.
+     * @param measurement имя величины измерения.
+     * @param weight вес величины измерения.
+     */
+    private void save(String measurement, TWeight weight) {
+      weights.put(measurement, weight);
+      queue.add(new MeasurementNode(measurement, weight));
+    }
+
+    /**
+     * Строит сеть величин измерения, содержащую элемент {@code root}. Если в сети есть некорректные
+     * правила конвертации, выбрасывается {@link ConversionNetworkBuildException}. После построения
+     * сети все итоговые веса будут лежать в {@link #weights}.
+     *
+     * <p>Построение происходит обходом графа конвертации в ширину.
+     *
+     * @return Словарь, ключом которого является величина измерения, значением - её вес.
      * @throws NonPositiveWeightRuleException при наличии в сети правил с неположительным весом.
      * @throws InfinitelyIncreasingCycleException при наличии в сети циклов с бесконечно
      *     увеличивающимся весом.
      * @throws ConversionNetworkBuildException при наличии некорректных правил конвертации в сети.
      */
-    private void buildNetwork(String measurement, TWeight weight) {
-      weights.put(measurement, weight);
-      for (ConversionRule<TWeight> rule : conversionGraph.get(measurement)) {
-        if (!rule.getSmallPieceCount().isNearlyPositive()) {
-          throw new NonPositiveWeightRuleException(
-              "В сети существует правило с неположительным весом: " + rule);
-        }
-        TWeight nextCoefficient = weight.divideBy(rule.getSmallPieceCount());
-        if (!weights.containsKey(rule.getSmallPiece())) {
-          buildNetwork(rule.getSmallPiece(), nextCoefficient);
-        } else if (!weights.get(rule.getSmallPiece()).isNearlyEqualTo(nextCoefficient)) {
-          throw new InfinitelyIncreasingCycleException(
-              "В сети существует бесконечно увеличивающийся цикл с бесконечно увеличивающимся"
-                  + " весом");
+    public Map<String, TWeight> build() {
+      save(root, weightFactory.one());
+      while (!queue.isEmpty()) {
+        MeasurementNode current = queue.poll();
+        String currentMeasurement = current.getMeasurement();
+        TWeight currentWeight = current.getWeight();
+        for (ConversionRule<TWeight> rule : conversionGraph.get(currentMeasurement)) {
+          if (!rule.getSmallPieceCount().isNearlyPositive()) {
+            throw new NonPositiveWeightRuleException(
+                "В сети существует правило с неположительным весом: " + rule);
+          }
+          TWeight smallPieceWeight = currentWeight.divideBy(rule.getSmallPieceCount());
+          if (!weights.containsKey(rule.getSmallPiece())) {
+            save(rule.getSmallPiece(), smallPieceWeight);
+            queue.add(new MeasurementNode(rule.getSmallPiece(), smallPieceWeight));
+          } else if (!weights.get(rule.getSmallPiece()).isNearlyEqualTo(smallPieceWeight)) {
+            throw new InfinitelyIncreasingCycleException(
+                "В сети существует бесконечно увеличивающийся цикл с бесконечно увеличивающимся"
+                    + " весом");
+          }
         }
       }
+      return weights;
     }
 
     /**
-     * Строит сеть величин измерения.
-     *
-     * @return Словарь, ключом которого является величина измерения, значением - её вес.
-     * @throws ConversionNetworkBuildException при наличии некорректных правил конвертации в сети.
-     * @see #buildNetwork(String, TWeight)
+     * Класс, используемый для хранения информации о единице измерения в обходе в ширину в {@link
+     * #build()}.
      */
-    public Map<String, TWeight> build() {
-      buildNetwork(root, weightFactory.one());
-      return weights;
+    @Data
+    private class MeasurementNode {
+      /** Величина измерения. */
+      private final String measurement;
+
+      /** Вес величины измерения. */
+      private final TWeight weight;
     }
   }
 }
