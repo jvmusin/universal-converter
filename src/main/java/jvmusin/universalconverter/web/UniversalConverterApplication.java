@@ -79,7 +79,7 @@ public class UniversalConverterApplication {
   @SuppressWarnings("CommentedOutCode")
   @Bean
   public NumberFactory<?> numberFactory() {
-    return bigDecimalNumberFactory(300, 20);
+    return bigDecimalNumberFactory(150, 20);
     // return new BigIntFractionNumberFactory();
     // return new DoubleNumberFactory();
   }
