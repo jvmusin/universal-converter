@@ -1,5 +1,11 @@
 package jvmusin.universalconverter.converter;
 
+import static java.util.Comparator.comparing;
+import static jvmusin.universalconverter.ListUtils.mergeLists;
+
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Map;
 import jvmusin.universalconverter.converter.exception.ConversionException;
 import jvmusin.universalconverter.converter.exception.MismatchedDimensionalityException;
 import jvmusin.universalconverter.converter.exception.NoSuchMeasurementException;
@@ -9,13 +15,6 @@ import jvmusin.universalconverter.fraction.Fraction;
 import jvmusin.universalconverter.number.Number;
 import jvmusin.universalconverter.number.NumberFactory;
 import lombok.RequiredArgsConstructor;
-
-import java.text.MessageFormat;
-import java.util.List;
-import java.util.Map;
-
-import static java.util.Comparator.comparing;
-import static jvmusin.universalconverter.ListUtils.mergeLists;
 
 /**
  * Для нахождения коэффициента {@code K} в уравнении вида {@code a/b = K * c/d} используется

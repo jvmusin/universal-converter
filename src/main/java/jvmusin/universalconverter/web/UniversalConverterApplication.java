@@ -1,5 +1,7 @@
 package jvmusin.universalconverter.web;
 
+import java.nio.file.Paths;
+import java.util.Map;
 import jvmusin.universalconverter.converter.MeasurementConverter;
 import jvmusin.universalconverter.converter.factory.CsvFileSourcedMeasurementConverterFactory;
 import jvmusin.universalconverter.number.BigIntFractionNumberFactory;
@@ -10,9 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-
-import java.nio.file.Paths;
-import java.util.Map;
 
 /** Основной класс, запускающий {@code Spring Boot} приложение. */
 @SpringBootApplication

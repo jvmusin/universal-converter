@@ -1,9 +1,9 @@
 package jvmusin.universalconverter.web;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 import jvmusin.universalconverter.fraction.ComplexFraction;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 /**
  * Выбрасывается, если выражение, указанное в запросе на конвертацию, не удалось конвертировать в

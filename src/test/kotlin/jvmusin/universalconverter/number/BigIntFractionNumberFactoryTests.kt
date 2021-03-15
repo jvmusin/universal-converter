@@ -43,12 +43,12 @@ class BigIntFractionNumberFactoryTests : BehaviorSpec() {
                     shouldThrow<NumberFormatException> { factory.parse("123.45.6") }
                 }
             }
+
             When("отрицательное число") {
-                Then("бросает NumberFormatException") {
-                    shouldThrow<NumberFormatException> { factory.parse("-1") }
+                Then("парсится как надо") {
+                    factory.parse("-1.234") shouldBe BigIntFractionNumber((-1234).toBigInteger(), 1000.toBigInteger())
                 }
             }
-
             When("строка '123'") {
                 Then("парсится как 123/1") {
                     factory.parse("123") shouldBe BigIntFractionNumber(123.toBigInteger(), 1.toBigInteger())
@@ -67,11 +67,6 @@ class BigIntFractionNumberFactoryTests : BehaviorSpec() {
             When("строка '.45'") {
                 Then("парсится как 45/100") {
                     factory.parse(".45") shouldBe BigIntFractionNumber(45.toBigInteger(), 100.toBigInteger())
-                }
-            }
-            When("строка '123,45' (разделитель запятая)") {
-                Then("парсится как 12345/100") {
-                    factory.parse("123,45") shouldBe BigIntFractionNumber(12345.toBigInteger(), 100.toBigInteger())
                 }
             }
         }

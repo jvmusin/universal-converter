@@ -1,12 +1,11 @@
 package jvmusin.universalconverter.converter;
 
-import jvmusin.universalconverter.number.Number;
-import org.springframework.util.Assert;
+import static jvmusin.universalconverter.ListUtils.*;
 
 import java.util.List;
 import java.util.Map;
-
-import static jvmusin.universalconverter.ListUtils.*;
+import jvmusin.universalconverter.number.Number;
+import org.springframework.util.Assert;
 
 public class MeasurementConverterUtils {
   /**
