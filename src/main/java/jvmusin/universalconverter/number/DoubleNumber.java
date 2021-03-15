@@ -48,8 +48,13 @@ public class DoubleNumber implements Number<DoubleNumber> {
     return value > EPS;
   }
 
+  /**
+   * Возвращает текущее значение с {@code 20} знаками после запятой.
+   *
+   * @return Текущее значение с {@code 20} знаками после запятой.
+   */
   @Override
   public String toString() {
-    return String.format(Locale.ENGLISH, "%.15f", value);
+    return String.format(Locale.ENGLISH, "%.20f", value);
   }
 }
