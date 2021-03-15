@@ -115,7 +115,7 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
           throw new NonPositiveWeightRuleException(
               "В сети существует правило с неположительным весом: " + rule);
         }
-        var nextCoefficient = weight.divideBy(rule.getSmallPieceCount());
+        TWeight nextCoefficient = weight.divideBy(rule.getSmallPieceCount());
         if (!weights.containsKey(rule.getSmallPiece())) {
           buildNetwork(rule.getSmallPiece(), nextCoefficient);
         } else if (!weights.get(rule.getSmallPiece()).isNearlyEqualTo(nextCoefficient)) {
