@@ -4,6 +4,7 @@ import static java.math.BigDecimal.ONE;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Objects;
 import lombok.Data;
 
 /**
@@ -19,7 +20,7 @@ import lombok.Data;
  * BigIntFractionNumber} и быстро теряющим точность, но лёгким {@link DoubleNumber}.
  */
 @Data
-class BigDecimalNumber implements Number<BigDecimalNumber> {
+public class BigDecimalNumber implements Number<BigDecimalNumber> {
 
   /** Текущее значение. */
   private final BigDecimal value;
@@ -89,5 +90,18 @@ class BigDecimalNumber implements Number<BigDecimalNumber> {
   @Override
   public String toString() {
     return value.toPlainString();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    BigDecimalNumber that = (BigDecimalNumber) o;
+    return value.compareTo(that.value) == 0;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
   }
 }
