@@ -5,17 +5,16 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
-import java.math.BigDecimal.ONE
-import java.math.MathContext.DECIMAL128
+import java.math.MathContext
 
 class BigDecimalNumberTests : StringSpec() {
-    private val mc = DECIMAL128
-    private val maxDifference = ONE.scaleByPowerOfTen(-5)
-    private val props = BigDecimalNumberProperties(mc, maxDifference)
-    private val factory = BigDecimalNumberFactory(props)
+    private val mathContext = MathContext.DECIMAL128
+    private val factory = BigDecimalNumberFactory(mathContext)
 
     private fun create(s: String): BigDecimalNumber = factory.parse(s)
     private fun createEpsString(eps: Int) = "0.${"0".repeat(eps - 1)}1"
+
+    @Suppress("SameParameterValue")
     private fun createEps(eps: Int) = create(createEpsString(eps))
 
     init {
@@ -34,20 +33,14 @@ class BigDecimalNumberTests : StringSpec() {
         "обратное к 0 = ArithmeticException" {
             shouldThrow<ArithmeticException> { create("0").inverse() }
         }
-        "0 примерно равно 1e-5" {
-            create("0").isNearlyEqualTo(createEps(5)).shouldBeTrue()
+        "1e-100 положительно" {
+            createEps(100).isPositive.shouldBeTrue()
         }
-        "0 не примерно равно 1e-4" {
-            create("0").isNearlyEqualTo(createEps(4)).shouldBeFalse()
+        "0 не положителен" {
+            create("0").isPositive.shouldBeFalse()
         }
-        "1e-4 примерно положительно" {
-            createEps(4).isNearlyPositive.shouldBeTrue()
-        }
-        "1e-5 не примерно положительно" {
-            createEps(5).isNearlyPositive.shouldBeFalse()
-        }
-        "-3 не примерно положительно" {
-            create("-3").isNearlyPositive.shouldBeFalse()
+        "-3 не положительно" {
+            create("-3").isPositive.shouldBeFalse()
         }
         "1e-1000 + '234' в строку возвращает всё число" {
             val s = createEpsString(1000) + "234"

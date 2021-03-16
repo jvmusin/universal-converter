@@ -9,11 +9,13 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.list
 import io.kotest.property.arbitrary.of
 import io.kotest.property.checkAll
-import jvmusin.universalconverter.converter.*
+import jvmusin.universalconverter.converter.ConversionRule
 import jvmusin.universalconverter.converter.exception.NoSuchMeasurementException
 import jvmusin.universalconverter.converter.network.exception.ConversionNetworkBuildException
-import jvmusin.universalconverter.converter.network.exception.InfinitelyIncreasingCycleException
 import jvmusin.universalconverter.converter.network.exception.NonPositiveWeightRuleException
+import jvmusin.universalconverter.converter.sampleConversionGraph
+import jvmusin.universalconverter.converter.sampleRules
+import jvmusin.universalconverter.converter.toConversionGraph
 import jvmusin.universalconverter.number.DoubleNumber
 import jvmusin.universalconverter.number.DoubleNumberFactory
 
@@ -38,19 +40,6 @@ class ConversionNetworkTests : StringSpec({
             val conversionGraph = rules.toConversionGraph()
             ConversionNetwork(conversionGraph, "м")
             ConversionNetwork(conversionGraph, "с")
-        }
-    }
-
-    "Сеть бросает InfinitelyIncreasingCycleException при наличии бесконечно увеличивающихся циклов" {
-        val wrongRule = sampleRules.first().let {
-            ConversionRule(it.bigPiece, it.smallPiece, 32.0)
-        }
-        val rules = sampleRules + wrongRule
-        shouldThrow<InfinitelyIncreasingCycleException> {
-            ConversionNetwork(
-                MeasurementConverterUtils.buildConversionGraph(rules),
-                "м"
-            )
         }
     }
 

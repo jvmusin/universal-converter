@@ -23,20 +23,20 @@ class DoubleNumberTests : StringSpec({
     "обратное к 0 = +INF" {
         DoubleNumber(0.0).inverse().value.shouldBePositiveInfinity()
     }
-    "1 примерно равно 1+(1e-30)" {
-        DoubleNumber(1.0).isNearlyEqualTo(DoubleNumber(1.0 + 1e-30)).shouldBeTrue()
+    "5 положительно" {
+        DoubleNumber(5.0).isPositive.shouldBeTrue()
     }
-    "1 не равно примерно 1+(1e-5)" {
-        DoubleNumber(1.0).isNearlyEqualTo(DoubleNumber(1.0 + 1e-5)).shouldBeFalse()
+    "1e-30 положительно" {
+        DoubleNumber(1e-30).isPositive.shouldBeTrue()
     }
-    "5 примерно положительно" {
-        DoubleNumber(5.0).isNearlyPositive.shouldBeTrue()
+    "0 не положительно" {
+        DoubleNumber(0.0).isPositive.shouldBeFalse()
     }
-    "1e-30 не примерно положительно" {
-        DoubleNumber(1e-30).isNearlyPositive.shouldBeFalse()
+    "Double.MIN_VALUE положительно" {
+        DoubleNumber(Double.MIN_VALUE).isPositive.shouldBeTrue()
     }
-    "-3 не примерно положительно" {
-        DoubleNumber(-3.0).isNearlyPositive.shouldBeFalse()
+    "-3 не положительно" {
+        DoubleNumber(-3.0).isPositive.shouldBeFalse()
     }
     "13.565 в строку и в дабл даёт то же самое число" {
         val x = 13.565

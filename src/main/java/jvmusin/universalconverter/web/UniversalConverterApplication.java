@@ -8,7 +8,6 @@ import java.util.Map;
 import jvmusin.universalconverter.converter.MeasurementConverter;
 import jvmusin.universalconverter.converter.factory.CsvFileSourcedMeasurementConverterFactory;
 import jvmusin.universalconverter.number.BigDecimalNumberFactory;
-import jvmusin.universalconverter.number.BigDecimalNumberProperties;
 import jvmusin.universalconverter.number.Number;
 import jvmusin.universalconverter.number.NumberFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,7 +78,7 @@ public class UniversalConverterApplication {
   @SuppressWarnings("CommentedOutCode")
   @Bean
   public NumberFactory<?> numberFactory() {
-    return bigDecimalNumberFactory(150, 20);
+    return bigDecimalNumberFactory(150);
     // return new BigIntFractionNumberFactory();
     // return new DoubleNumberFactory();
   }
@@ -91,15 +90,11 @@ public class UniversalConverterApplication {
    * будут равны, если они отличаются не более, чем на <code>10<sup>comparingDigits</sup></code>.
    *
    * @param digits количество значащих цифр, хранящихся в числах, создаваемых фабрикой.
-   * @param comparingDigits количество значащих цифр, которые должны совпадать у двух чисел, чтобы
-   *     те были равны.
    * @return Фабрику {@link BigDecimalNumberFactory}.
    */
   @SuppressWarnings("SameParameterValue")
-  private BigDecimalNumberFactory bigDecimalNumberFactory(int digits, int comparingDigits) {
-    MathContext mc = new MathContext(digits, RoundingMode.HALF_EVEN);
-    BigDecimal diff = BigDecimal.ONE.movePointLeft(comparingDigits);
-    BigDecimalNumberProperties props = new BigDecimalNumberProperties(mc, diff);
-    return new BigDecimalNumberFactory(props);
+  private BigDecimalNumberFactory bigDecimalNumberFactory(int digits) {
+    MathContext mathContext = new MathContext(digits, RoundingMode.HALF_EVEN);
+    return new BigDecimalNumberFactory(mathContext);
   }
 }

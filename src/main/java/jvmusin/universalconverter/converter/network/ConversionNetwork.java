@@ -9,7 +9,6 @@ import java.util.Set;
 import jvmusin.universalconverter.converter.ConversionRule;
 import jvmusin.universalconverter.converter.exception.NoSuchMeasurementException;
 import jvmusin.universalconverter.converter.network.exception.ConversionNetworkBuildException;
-import jvmusin.universalconverter.converter.network.exception.InfinitelyIncreasingCycleException;
 import jvmusin.universalconverter.converter.network.exception.NonPositiveWeightRuleException;
 import jvmusin.universalconverter.number.Number;
 import jvmusin.universalconverter.number.NumberFactory;
@@ -122,8 +121,6 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
      *
      * @return Словарь, ключом которого является величина измерения, значением - её вес.
      * @throws NonPositiveWeightRuleException при наличии в сети правил с неположительным весом.
-     * @throws InfinitelyIncreasingCycleException при наличии в сети циклов с бесконечно
-     *     увеличивающимся весом.
      * @throws ConversionNetworkBuildException при наличии некорректных правил конвертации в сети.
      */
     public Map<String, TWeight> build() {
@@ -133,7 +130,7 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
         String currentMeasurement = current.getMeasurement();
         TWeight currentWeight = current.getWeight();
         for (ConversionRule<TWeight> rule : conversionGraph.get(currentMeasurement)) {
-          if (!rule.getSmallPieceCount().isNearlyPositive()) {
+          if (!rule.getSmallPieceCount().isPositive()) {
             throw new NonPositiveWeightRuleException(
                 "В сети существует правило с неположительным весом: " + rule);
           }
@@ -141,11 +138,14 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
           if (!weights.containsKey(rule.getSmallPiece())) {
             save(rule.getSmallPiece(), smallPieceWeight);
             queue.add(new MeasurementNode(rule.getSmallPiece(), smallPieceWeight));
-          } else if (!weights.get(rule.getSmallPiece()).isNearlyEqualTo(smallPieceWeight)) {
-            throw new InfinitelyIncreasingCycleException(
-                "В сети существует бесконечно увеличивающийся цикл с бесконечно увеличивающимся"
-                    + " весом");
           }
+
+          // TODO: Compare smallPieceWeight to weights[rule.smallPiece]
+          //  to ensure that there are no incorrect rules so that we can have
+          //  infinitely-high-weight and infinitely-zero-weight cycles.
+          //  It's not done because I have no clue how to correctly compare doubles here
+          //  assuming that some precision losing persists.
+          //  Checking this with BigIntFractionNumber is easy, but with others it's really tough.
         }
       }
       return weights;
