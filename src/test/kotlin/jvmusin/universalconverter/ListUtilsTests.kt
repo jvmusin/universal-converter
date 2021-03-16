@@ -72,7 +72,9 @@ class ListUtilsTests : BehaviorSpec({
         }
         When("на некоторых элементах списка возвращается null") {
             Then("возвращает список с null значениями") {
-                mapList(listOf(1, 2, 3, 4, 5)) { if (it % 2 == 0) null else it } shouldBe listOf(1, null, 3, null, 5)
+                val input = listOf(1, 2, 3, 4, 5)
+                val expected = listOf(1, null, 3, null, 5)
+                mapList(input) { if (it % 2 == 0) null else it } shouldBe expected
             }
         }
         When("некоторые элементы списка равны null") {
@@ -97,7 +99,9 @@ class ListUtilsTests : BehaviorSpec({
         }
         When("mapper возвращает null") {
             Then("бросает NullPointerException") {
-                shouldThrow<NullPointerException> { groupList(listOf(1, 2, 3)) { if (it % 2 == 1) it else null } }
+                shouldThrow<NullPointerException> {
+                    groupList(listOf(1, 2, 3)) { if (it % 2 == 1) it else null }
+                }
             }
         }
         When("список пуст") {

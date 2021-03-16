@@ -46,27 +46,32 @@ class BigIntFractionNumberFactoryTests : BehaviorSpec() {
 
             When("отрицательное число") {
                 Then("парсится как надо") {
-                    factory.parse("-1.234") shouldBe BigIntFractionNumber((-1234).toBigInteger(), 1000.toBigInteger())
+                    val expected = BigIntFractionNumber((-1234).toBigInteger(), 1000.toBigInteger())
+                    factory.parse("-1.234") shouldBe expected
                 }
             }
             When("строка '123'") {
                 Then("парсится как 123/1") {
-                    factory.parse("123") shouldBe BigIntFractionNumber(123.toBigInteger(), 1.toBigInteger())
+                    val expected = BigIntFractionNumber(123.toBigInteger(), 1.toBigInteger())
+                    factory.parse("123") shouldBe expected
                 }
             }
             When("строка '123.'") {
                 Then("парсится как 123/1") {
-                    factory.parse("123.") shouldBe BigIntFractionNumber(123.toBigInteger(), 1.toBigInteger())
+                    val expected = BigIntFractionNumber(123.toBigInteger(), 1.toBigInteger())
+                    factory.parse("123.") shouldBe expected
                 }
             }
             When("строка '123.45'") {
                 Then("парсится как 12345/100") {
-                    factory.parse("123.45") shouldBe BigIntFractionNumber(12345.toBigInteger(), 100.toBigInteger())
+                    val expected = BigIntFractionNumber(12345.toBigInteger(), 100.toBigInteger())
+                    factory.parse("123.45") shouldBe expected
                 }
             }
             When("строка '.45'") {
                 Then("парсится как 45/100") {
-                    factory.parse(".45") shouldBe BigIntFractionNumber(45.toBigInteger(), 100.toBigInteger())
+                    val expected = BigIntFractionNumber(45.toBigInteger(), 100.toBigInteger())
+                    factory.parse(".45") shouldBe expected
                 }
             }
         }

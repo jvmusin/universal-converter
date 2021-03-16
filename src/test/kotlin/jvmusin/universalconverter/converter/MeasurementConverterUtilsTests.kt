@@ -16,7 +16,10 @@ class MeasurementConverterUtilsTests : BehaviorSpec({
                 val graph = MeasurementConverterUtils.buildConversionGraph(rules)
                 graph shouldBe mapOf(
                     "n1" to listOf(ConversionRule("n1", "n2", 0.25)),
-                    "n2" to listOf(ConversionRule("n2", "n1", 4.0), ConversionRule("n2", "n3", 0.5)),
+                    "n2" to listOf(
+                        ConversionRule("n2", "n1", 4.0),
+                        ConversionRule("n2", "n3", 0.5)
+                    ),
                     "n3" to listOf(ConversionRule("n3", "n2", 2.0))
                 )
             }

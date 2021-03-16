@@ -1,6 +1,8 @@
 package jvmusin.universalconverter.converter;
 
-import static jvmusin.universalconverter.ListUtils.*;
+import static jvmusin.universalconverter.ListUtils.groupList;
+import static jvmusin.universalconverter.ListUtils.mapList;
+import static jvmusin.universalconverter.ListUtils.mergeLists;
 
 import java.util.List;
 import java.util.Map;

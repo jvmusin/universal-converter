@@ -17,7 +17,11 @@ import java.util.*
 @WebMvcTest(Controller::class)
 class EndpointTests(private val mockMvc: MockMvc) : StringSpec() {
 
-    private fun convert(from: String, to: String, expect: MockMvcResultMatchersDsl.() -> Unit): ResultActionsDsl {
+    private fun convert(
+        from: String,
+        to: String,
+        expect: MockMvcResultMatchersDsl.() -> Unit
+    ): ResultActionsDsl {
         return mockMvc.post("/convert") {
             contentType = MediaType.APPLICATION_JSON
             content = jsonMapper().writeValueAsString(ConvertMeasurementValuesRequest(from, to))

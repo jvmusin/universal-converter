@@ -13,7 +13,9 @@ import jvmusin.universalconverter.fraction.ComplexFraction
 class MeasurementConverterTests : StringSpec() {
     private val converter = sampleConverter
 
-    private fun convert(from: ComplexFraction<String>, to: ComplexFraction<String>) = converter.convert(from, to).value
+    private fun convert(from: ComplexFraction<String>, to: ComplexFraction<String>): Double {
+        return converter.convert(from, to).value
+    }
 
     init {
         "Пример из условия работает" {

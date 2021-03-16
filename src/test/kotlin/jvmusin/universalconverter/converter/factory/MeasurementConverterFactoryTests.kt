@@ -23,7 +23,9 @@ class MeasurementConverterFactoryTests : BehaviorSpec() {
             }
             When("среди правил есть null") {
                 Then("бросает MeasurementConverterBuildException") {
-                    shouldThrow<MeasurementConverterBuildException> { converterFactory.create(sampleRules + null) }
+                    shouldThrow<MeasurementConverterBuildException> {
+                        converterFactory.create(sampleRules + null)
+                    }
                 }
             }
             When("есть бесконечно увеличивающийся цикл") {
@@ -39,8 +41,11 @@ class MeasurementConverterFactoryTests : BehaviorSpec() {
             When("всё хорошо") {
                 Then("создаёт корректный конвертер") {
                     val converter = converterFactory.create(sampleRules)
-                    converter.convert(ComplexFraction(listOf("км"), listOf()), ComplexFraction(listOf("м"), listOf()))
-                        .value.shouldBe(1000)
+                    val result = converter.convert(
+                        ComplexFraction(listOf("км"), listOf()),
+                        ComplexFraction(listOf("м"), listOf())
+                    )
+                    result.value shouldBe 1000
                 }
             }
         }

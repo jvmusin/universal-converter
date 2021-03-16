@@ -10,7 +10,10 @@ class ExpressionToFractionConversionTests : StringSpec({
     "Хорошие дроби парсятся верно" {
         convertExpressionToFraction("") shouldBe ComplexFraction(emptyList(), emptyList())
         convertExpressionToFraction("м / с") shouldBe ComplexFraction(listOf("м"), listOf("с"))
-        convertExpressionToFraction("кг * м / с * с") shouldBe ComplexFraction(listOf("кг", "м"), listOf("с", "с"))
+        convertExpressionToFraction("кг * м / с * с") shouldBe ComplexFraction(
+            listOf("кг", "м"),
+            listOf("с", "с")
+        )
         convertExpressionToFraction("кг") shouldBe ComplexFraction(listOf("кг"), emptyList())
         convertExpressionToFraction("1") shouldBe ComplexFraction(emptyList(), emptyList())
         convertExpressionToFraction("1/1") shouldBe ComplexFraction(emptyList(), emptyList())
@@ -25,7 +28,20 @@ class ExpressionToFractionConversionTests : StringSpec({
 
     "Плохие дроби не парсятся" {
         val badRationals = listOf(
-            "/", "/с", "с/", "м//м", "м**м", "*", "*м", "м*", "*м*", "*м*м", "м*м/*м", "м*/м*м", "1/", "/1"
+            "/",
+            "/с",
+            "с/",
+            "м//м",
+            "м**м",
+            "*",
+            "*м",
+            "м*",
+            "*м*",
+            "*м*м",
+            "м*м/*м",
+            "м*/м*м",
+            "1/",
+            "/1"
         )
         for (rational in badRationals) {
             shouldThrow<MalformedExpressionException> {

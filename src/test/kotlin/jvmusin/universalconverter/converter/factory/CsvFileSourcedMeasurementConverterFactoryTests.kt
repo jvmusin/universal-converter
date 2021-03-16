@@ -29,8 +29,11 @@ class CsvFileSourcedMeasurementConverterFactoryTests : BehaviorSpec() {
                         "час,мин,60",
                         "мин,с,60"
                     )
-                    converter.convert(ComplexFraction(listOf("км"), listOf()), ComplexFraction(listOf("мм"), listOf()))
-                        .value.shouldBe(1_000_000)
+                    val result = converter.convert(
+                        ComplexFraction(listOf("км"), listOf()),
+                        ComplexFraction(listOf("мм"), listOf())
+                    )
+                    result.value shouldBe 1_000_000
                 }
             }
             When("есть пустые строки") {
@@ -46,8 +49,11 @@ class CsvFileSourcedMeasurementConverterFactoryTests : BehaviorSpec() {
                         "\t   \t ",
                         "\t",
                     )
-                    converter.convert(ComplexFraction(listOf("км"), listOf()), ComplexFraction(listOf("мм"), listOf()))
-                        .value.shouldBe(1_000_000)
+                    val result = converter.convert(
+                        ComplexFraction(listOf("км"), listOf()),
+                        ComplexFraction(listOf("мм"), listOf())
+                    )
+                    result.value shouldBe 1_000_000
                 }
             }
             When("есть пустой токен") {

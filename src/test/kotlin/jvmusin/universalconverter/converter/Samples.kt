@@ -6,7 +6,11 @@ import jvmusin.universalconverter.number.DoubleNumberFactory
 import jvmusin.universalconverter.number.Number
 
 @Suppress("TestFunctionName")
-fun ConversionRule(bigPiece: String, smallPiece: String, weight: Double): ConversionRule<DoubleNumber> {
+fun ConversionRule(
+    bigPiece: String,
+    smallPiece: String,
+    weight: Double
+): ConversionRule<DoubleNumber> {
     return ConversionRule(bigPiece, smallPiece, DoubleNumber(weight))
 }
 
