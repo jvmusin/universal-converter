@@ -1,6 +1,7 @@
 package jvmusin.universalconverter.number;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.Assert;
 
@@ -8,12 +9,12 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor
 public class BigDecimalNumberFactory implements NumberFactory<BigDecimalNumber> {
 
-  /** Свойства операций всех чисел, создаваемых фабрикой. */
-  private final BigDecimalNumberProperties props;
+  /** {@link MathContext}, используемый для всех операций над числами, создаваемыми фабрикой. */
+  private final MathContext mathContext;
 
   @Override
   public BigDecimalNumber one() {
-    return new BigDecimalNumber(BigDecimal.ONE, props);
+    return new BigDecimalNumber(BigDecimal.ONE, mathContext);
   }
 
   /**
@@ -29,6 +30,6 @@ public class BigDecimalNumberFactory implements NumberFactory<BigDecimalNumber> 
   @Override
   public BigDecimalNumber parse(String s) {
     Assert.notNull(s, "Строка не может быть null");
-    return new BigDecimalNumber(new BigDecimal(s), props);
+    return new BigDecimalNumber(new BigDecimal(s), mathContext);
   }
 }

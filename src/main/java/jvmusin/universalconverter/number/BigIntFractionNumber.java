@@ -62,8 +62,9 @@ public class BigIntFractionNumber implements Number<BigIntFractionNumber> {
 
   @Override
   public BigIntFractionNumber multiplyBy(BigIntFractionNumber other) {
-    return new BigIntFractionNumber(
-        numerator.multiply(other.numerator), denominator.multiply(other.denominator));
+    BigInteger newNumerator = numerator.multiply(other.numerator);
+    BigInteger newDenominator = denominator.multiply(other.denominator);
+    return new BigIntFractionNumber(newNumerator, newDenominator);
   }
 
   /**
@@ -75,8 +76,9 @@ public class BigIntFractionNumber implements Number<BigIntFractionNumber> {
    */
   @Override
   public BigIntFractionNumber divideBy(BigIntFractionNumber other) {
-    return new BigIntFractionNumber(
-        numerator.multiply(other.denominator), denominator.multiply(other.numerator));
+    BigInteger newNumerator = numerator.multiply(other.denominator);
+    BigInteger newDenominator = denominator.multiply(other.numerator);
+    return new BigIntFractionNumber(newNumerator, newDenominator);
   }
 
   /**
@@ -90,14 +92,9 @@ public class BigIntFractionNumber implements Number<BigIntFractionNumber> {
     return new BigIntFractionNumber(denominator, numerator);
   }
 
-  /**
-   * Проверяет, положительна ли текущая дробь.
-   *
-   * @return {@code true}, если текущая дробь положительна и {@code false} иначе.
-   */
   @Override
-  public boolean isNearlyPositive() {
-    return numerator.compareTo(BigInteger.ZERO) > 0;
+  public boolean isPositive() {
+    return numerator.signum() > 0;
   }
 
   @Override

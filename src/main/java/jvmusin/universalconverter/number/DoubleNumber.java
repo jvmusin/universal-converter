@@ -6,9 +6,6 @@ import lombok.Data;
 /** Число, представляемое как {@code double} внутри. */
 @Data
 public class DoubleNumber implements Number<DoubleNumber> {
-  /** Максимальное допустимое отклонение. */
-  public static final double EPS = 1e-20;
-
   /** Текущее значение. */
   private final double value;
 
@@ -27,14 +24,9 @@ public class DoubleNumber implements Number<DoubleNumber> {
     return new DoubleNumber(1 / value);
   }
 
-  /**
-   * Проверяет, что текущее значение строго положительно, то есть больше, чем {@code EPS}.
-   *
-   * @return Положительно ли текущее значение.
-   */
   @Override
-  public boolean isNearlyPositive() {
-    return value > EPS;
+  public boolean isPositive() {
+    return value > 0;
   }
 
   /**

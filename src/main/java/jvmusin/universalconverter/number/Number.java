@@ -42,12 +42,9 @@ public interface Number<TNumber extends Number<TNumber>> {
   TNumber inverse();
 
   /**
-   * Проверяет, положительно ли текущее значение с учётом погрешности.
-   *
-   * <p>Если реализация предполагает хранение чисел с абсолютной точностью, то этот метод проверяет,
-   * что {@code this > 0}.
+   * Проверяет, положительно ли текущее значение.
    *
    * @return {@code this > 0}.
    */
-  boolean isNearlyPositive();
+  boolean isPositive();
 }

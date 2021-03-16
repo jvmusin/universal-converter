@@ -130,7 +130,7 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
         String currentMeasurement = current.getMeasurement();
         TWeight currentWeight = current.getWeight();
         for (ConversionRule<TWeight> rule : conversionGraph.get(currentMeasurement)) {
-          if (!rule.getSmallPieceCount().isNearlyPositive()) {
+          if (!rule.getSmallPieceCount().isPositive()) {
             throw new NonPositiveWeightRuleException(
                 "В сети существует правило с неположительным весом: " + rule);
           }
