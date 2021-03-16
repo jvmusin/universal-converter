@@ -34,12 +34,6 @@ class BigDecimalNumberTests : StringSpec() {
         "обратное к 0 = ArithmeticException" {
             shouldThrow<ArithmeticException> { create("0").inverse() }
         }
-        "0 примерно равно 1e-5" {
-            create("0").isNearlyEqualTo(createEps(5)).shouldBeTrue()
-        }
-        "0 не примерно равно 1e-4" {
-            create("0").isNearlyEqualTo(createEps(4)).shouldBeFalse()
-        }
         "1e-4 примерно положительно" {
             createEps(4).isNearlyPositive.shouldBeTrue()
         }

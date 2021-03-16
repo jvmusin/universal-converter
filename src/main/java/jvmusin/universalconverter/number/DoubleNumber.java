@@ -28,17 +28,6 @@ public class DoubleNumber implements Number<DoubleNumber> {
   }
 
   /**
-   * Проверяет, что текущее и заданное значения отличаются не более, чем на {@code EPS}.
-   *
-   * @param other значение для проверки на равенство.
-   * @return Равны ли приблизительно текущее и заданное значения.
-   */
-  @Override
-  public boolean isNearlyEqualTo(DoubleNumber other) {
-    return Math.abs(value - other.value) <= EPS;
-  }
-
-  /**
    * Проверяет, что текущее значение строго положительно, то есть больше, чем {@code EPS}.
    *
    * @return Положительно ли текущее значение.

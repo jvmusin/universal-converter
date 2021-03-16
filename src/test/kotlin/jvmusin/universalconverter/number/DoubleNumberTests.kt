@@ -23,12 +23,6 @@ class DoubleNumberTests : StringSpec({
     "обратное к 0 = +INF" {
         DoubleNumber(0.0).inverse().value.shouldBePositiveInfinity()
     }
-    "1 примерно равно 1+(1e-30)" {
-        DoubleNumber(1.0).isNearlyEqualTo(DoubleNumber(1.0 + 1e-30)).shouldBeTrue()
-    }
-    "1 не равно примерно 1+(1e-5)" {
-        DoubleNumber(1.0).isNearlyEqualTo(DoubleNumber(1.0 + 1e-5)).shouldBeFalse()
-    }
     "5 примерно положительно" {
         DoubleNumber(5.0).isNearlyPositive.shouldBeTrue()
     }

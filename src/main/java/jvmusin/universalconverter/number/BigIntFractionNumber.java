@@ -91,17 +91,6 @@ public class BigIntFractionNumber implements Number<BigIntFractionNumber> {
   }
 
   /**
-   * Проверяет, равны ли два значения <b>в точности</b>.
-   *
-   * @param other значение для проверки на равенство.
-   * @return {@code true}, если текущая и заданная дроби равны и {@code false} иначе.
-   */
-  @Override
-  public boolean isNearlyEqualTo(BigIntFractionNumber other) {
-    return equals(other);
-  }
-
-  /**
    * Проверяет, положительна ли текущая дробь.
    *
    * @return {@code true}, если текущая дробь положительна и {@code false} иначе.

@@ -3,7 +3,6 @@ package jvmusin.universalconverter.number;
 import static java.math.BigDecimal.ONE;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Objects;
 import lombok.Data;
 
@@ -54,20 +53,6 @@ public class BigDecimalNumber implements Number<BigDecimalNumber> {
   @Override
   public BigDecimalNumber inverse() {
     return new BigDecimalNumber(ONE.divide(value, props.getMathContext()), props);
-  }
-
-  /**
-   * Проверяет, что {@code this} и {@code other} отличаются не более, чем на {@link
-   * BigDecimalNumberProperties#getMaximalDifferenceToBeEqual() props.maximalDifferenceToBeEqual}.
-   *
-   * @param other значение, которое нужно проверить на приблизительное равенство с текущим числом.
-   * @return {@code abs(this - other) <= props.maximalDifferenceToBeEqual}.
-   */
-  @Override
-  public boolean isNearlyEqualTo(BigDecimalNumber other) {
-    MathContext mc = props.getMathContext();
-    BigDecimal difference = value.subtract(other.value, mc).abs(mc);
-    return difference.compareTo(props.getMaximalDifferenceToBeEqual()) <= 0;
   }
 
   /**
