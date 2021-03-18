@@ -1,10 +1,10 @@
 package com.github.jvmusin.universalconverter.converter.factory;
 
+import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
 import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
 import com.github.jvmusin.universalconverter.number.Number;
 import java.util.List;
-import com.github.jvmusin.universalconverter.converter.ConversionRule;
 
 /**
  * Фабрика, используемая для создания {@link MeasurementConverter}.

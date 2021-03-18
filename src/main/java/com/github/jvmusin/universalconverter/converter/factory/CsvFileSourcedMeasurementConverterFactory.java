@@ -3,6 +3,7 @@ package com.github.jvmusin.universalconverter.converter.factory;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 
+import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
 import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
 import com.github.jvmusin.universalconverter.number.Number;
@@ -12,7 +13,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.Assert;
 

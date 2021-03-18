@@ -1,11 +1,8 @@
 package com.github.jvmusin.universalconverter.converter;
 
-import static java.util.Comparator.comparing;
 import static com.github.jvmusin.universalconverter.ListUtils.mergeLists;
+import static java.util.Comparator.comparing;
 
-import java.text.MessageFormat;
-import java.util.List;
-import java.util.Map;
 import com.github.jvmusin.universalconverter.converter.exception.ConversionException;
 import com.github.jvmusin.universalconverter.converter.exception.MismatchedDimensionalityException;
 import com.github.jvmusin.universalconverter.converter.exception.NoSuchMeasurementException;
@@ -14,6 +11,9 @@ import com.github.jvmusin.universalconverter.fraction.ComplexFraction;
 import com.github.jvmusin.universalconverter.fraction.Fraction;
 import com.github.jvmusin.universalconverter.number.Number;
 import com.github.jvmusin.universalconverter.number.NumberFactory;
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 
 /**

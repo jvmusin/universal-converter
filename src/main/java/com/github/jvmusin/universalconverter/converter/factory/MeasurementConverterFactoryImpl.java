@@ -1,7 +1,9 @@
 package com.github.jvmusin.universalconverter.converter.factory;
 
+import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverterImpl;
+import com.github.jvmusin.universalconverter.converter.MeasurementConverterUtils;
 import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
 import com.github.jvmusin.universalconverter.converter.network.ConversionNetwork;
 import com.github.jvmusin.universalconverter.number.Number;
@@ -12,8 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import com.github.jvmusin.universalconverter.converter.ConversionRule;
-import com.github.jvmusin.universalconverter.converter.MeasurementConverterUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.Assert;
 

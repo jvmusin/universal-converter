@@ -1,5 +1,6 @@
 package com.github.jvmusin.universalconverter.converter.network;
 
+import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.exception.NoSuchMeasurementException;
 import com.github.jvmusin.universalconverter.converter.network.exception.ConversionNetworkBuildException;
 import com.github.jvmusin.universalconverter.converter.network.exception.NonPositiveWeightRuleException;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
