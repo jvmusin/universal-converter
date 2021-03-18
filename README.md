@@ -151,18 +151,25 @@
 
 ## Технологический стек
 
-В приложении используются:
+Приложение:
 
 - Java 11
 - Lombok
 - Spring Boot 2.4.3 (Web)
 - Maven
 
-Для тестирования используются:
+Тестирование:
 
 - Kotlin 1.4.31
 - Kotest 4.4.3
 - Spring Boot Test
 - Jackson 2.12.2
+
+Инфрастуктура:
+
+- GitHub
+- GitHub Maven CI GitHub Action
+- Google Java Format GitHub Action
+- GitHub Dependabot
 
 Для управления зависимостями используется Maven.
