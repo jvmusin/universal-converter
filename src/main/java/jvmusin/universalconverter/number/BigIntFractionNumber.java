@@ -3,6 +3,7 @@ package jvmusin.universalconverter.number;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import lombok.Data;
 
 /**
@@ -14,6 +15,14 @@ import lombok.Data;
  */
 @Data
 public class BigIntFractionNumber implements Number<BigIntFractionNumber> {
+
+  /**
+   * {@link MathContext}, используемый для перевода числа в строку.
+   *
+   * <p>Берёт 34 значащие цифры у числа и округляет по правилам математики ({@link
+   * RoundingMode#HALF_UP}).
+   */
+  private static final MathContext MATH_CONTEXT = new MathContext(34, RoundingMode.HALF_UP);
 
   /** Числитель. */
   private final BigInteger numerator;
@@ -96,10 +105,16 @@ public class BigIntFractionNumber implements Number<BigIntFractionNumber> {
     return numerator.signum() > 0;
   }
 
+  /**
+   * Берёт 34 значащие цифры у числа и округляет по правилам математики ({@link
+   * RoundingMode#HALF_UP}).
+   *
+   * @return Строковое представление текущего числа.
+   */
   @Override
   public String toString() {
-    return new BigDecimal(numerator)
-        .divide(new BigDecimal(denominator), MathContext.DECIMAL128)
-        .toPlainString();
+    BigDecimal numerator = new BigDecimal(this.numerator);
+    BigDecimal denominator = new BigDecimal(this.denominator);
+    return numerator.divide(denominator, MATH_CONTEXT).toPlainString();
   }
 }

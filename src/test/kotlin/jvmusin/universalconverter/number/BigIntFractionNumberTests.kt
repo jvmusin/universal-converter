@@ -9,7 +9,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
     operator fun BigIntFractionNumber.times(other: BigIntFractionNumber) = multiplyBy(other)
     operator fun BigIntFractionNumber.div(other: BigIntFractionNumber) = divideBy(other)
 
-    fun create(x: Int, y: Int) = BigIntFractionNumber(x.toBigInteger(), y.toBigInteger())
+    fun create(x: Int, y: Int = 1) = BigIntFractionNumber(x.toBigInteger(), y.toBigInteger())
 
     Given("создание") {
 
@@ -101,7 +101,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
         }
         When("умножается на 0") {
             Then("получается 0") {
-                create(-3, 5) * create(0, 1) shouldBe create(0, 1)
+                create(-3, 5) * create(0) shouldBe create(0)
             }
         }
     }
@@ -120,7 +120,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
         }
         When("умножается на 0") {
             Then("бросает ArithmeticException") {
-                shouldThrow<ArithmeticException> { create(-3, 5) / create(0, 1) }
+                shouldThrow<ArithmeticException> { create(-3, 5) / create(0) }
             }
         }
     }
@@ -138,7 +138,22 @@ class BigIntFractionNumberTests : BehaviorSpec({
         }
         When("число 0") {
             Then("бросает ArithmeticException") {
-                shouldThrow<ArithmeticException> { create(0, 1).inverse() }
+                shouldThrow<ArithmeticException> { create(0).inverse() }
+            }
+        }
+    }
+
+    Given("toString") {
+        When("1/3 * 1000") {
+            Then("возвращает 34 значащих цифры и округляет вниз") {
+                val x = create(1, 3) * create(1000)
+                x.toString() shouldBe "333.3333333333333333333333333333333"
+            }
+        }
+        When("2/3 * 1000") {
+            Then("возвращает 34 значащих цифры и округляет вверх") {
+                val x = create(2, 3) * create(1000)
+                x.toString() shouldBe "666.6666666666666666666666666666667"
             }
         }
     }

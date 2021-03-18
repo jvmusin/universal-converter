@@ -1,11 +1,22 @@
 package jvmusin.universalconverter.number;
 
-import java.util.Locale;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import lombok.Data;
 
 /** Число, представляемое как {@code double} внутри. */
 @Data
 public class DoubleNumber implements Number<DoubleNumber> {
+
+  /**
+   * {@link MathContext}, используемый для перевода числа в строку.
+   *
+   * <p>Берёт 34 значащие цифры у числа и округляет по правилам математики ({@link
+   * RoundingMode#HALF_UP}).
+   */
+  private static final MathContext MATH_CONTEXT = new MathContext(34, RoundingMode.HALF_UP);
+
   /** Текущее значение. */
   private final double value;
 
@@ -30,12 +41,13 @@ public class DoubleNumber implements Number<DoubleNumber> {
   }
 
   /**
-   * Возвращает текущее значение с {@code 20} знаками после запятой.
+   * Берёт 34 значащие цифры у числа и округляет по правилам математики ({@link
+   * RoundingMode#HALF_UP}).
    *
-   * @return Текущее значение с {@code 20} знаками после запятой.
+   * @return Строковое представление текущего числа.
    */
   @Override
   public String toString() {
-    return String.format(Locale.ENGLISH, "%.20f", value);
+    return new BigDecimal(value, MATH_CONTEXT).toPlainString();
   }
 }

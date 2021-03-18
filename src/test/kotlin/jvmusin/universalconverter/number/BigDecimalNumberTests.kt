@@ -50,5 +50,13 @@ class BigDecimalNumberTests : StringSpec() {
             val x = create("234") * create("1" + "0".repeat(1000))
             x.toString() shouldBe "234" + "0".repeat(1000)
         }
+        "1/3 * 1000 возвращает 34 цифры и округляет вниз" {
+            val x = create("1") / create("3") * create("1000")
+            x.toString() shouldBe "333.3333333333333333333333333333333"
+        }
+        "2/3 * 1000 возвращает 34 цифры и округляет вверх" {
+            val x = create("2") / create("3") * create("1000")
+            x.toString() shouldBe "666.6666666666666666666666666666667"
+        }
     }
 }

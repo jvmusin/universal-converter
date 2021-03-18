@@ -42,4 +42,13 @@ class DoubleNumberTests : StringSpec({
         val x = 13.565
         DoubleNumber(x).toString().toDouble() shouldBe x
     }
+    // Kind of acceptance tests below
+    "1/3 * 1000 в строку отдаёт 34 значащие цифры и округляет вниз" {
+        val x = DoubleNumber(1.0).divideBy(DoubleNumber(3.0)).multiplyBy(DoubleNumber(1000.0))
+        x.toString() shouldBe "333.3333333333333143855270463973284"
+    }
+    "2/3 * 1000 в строку отдаёт 34 значащие цифры и округляет вверх" {
+        val x = DoubleNumber(2.0).divideBy(DoubleNumber(3.0)).multiplyBy(DoubleNumber(1000.0))
+        x.toString() shouldBe "666.6666666666666287710540927946568"
+    }
 })
