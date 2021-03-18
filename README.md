@@ -158,7 +158,7 @@
 
 - Java 11
 - Lombok
-- Spring Boot 2.4.3 (Web)
+- Spring Boot 2.4.4 (Web)
 - Maven
 
 Тестирование:
