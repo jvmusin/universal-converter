@@ -1,4 +1,4 @@
-name: Java Google Format
+name: Google Java Format
 
 on: [ push ]
 
