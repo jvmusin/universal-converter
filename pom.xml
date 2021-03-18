@@ -8,7 +8,7 @@
         <version>2.4.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>jvmusin</groupId>
+    <groupId>com.github.jvmusin</groupId>
     <artifactId>universal-converter</artifactId>
     <version>1.0.0</version>
     <name>Kontur Universal Converter</name>
