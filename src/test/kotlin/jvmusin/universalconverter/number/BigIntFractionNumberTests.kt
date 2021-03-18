@@ -13,7 +13,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
 
     Given("создание") {
 
-        fun eval(have: Pair<Int, Int>, need: Pair<Int, Int>) {
+        fun createAndValidate(have: Pair<Int, Int>, need: Pair<Int, Int>) {
             val (haveNumerator, haveDenominator) = have
             val (needNominator, needDenominator) = need
             with(create(haveNumerator, haveDenominator)) {
@@ -36,25 +36,25 @@ class BigIntFractionNumberTests : BehaviorSpec({
         }
         When("нулевой числитель") {
             Then("возвращает 0/1") {
-                eval(0 to 123, 0 to 1)
+                createAndValidate(0 to 123, 0 to 1)
             }
         }
         When("отрицательный знаменатель") {
             And("положительный числитель") {
                 Then("меняют знаки") {
-                    eval(3 to -2, -3 to 2)
+                    createAndValidate(3 to -2, -3 to 2)
                 }
             }
             And("отрицательный числитель") {
                 Then("меняют знаки") {
-                    eval(-3 to -2, 3 to 2)
+                    createAndValidate(-3 to -2, 3 to 2)
                 }
             }
         }
         When("числитель и знаменатель не взаимнопросты") {
             And("они положительны") {
                 Then("результат делится на их НОД") {
-                    eval(
+                    createAndValidate(
                         3 * 5 * 7 to 5 * 11,
                         3 * 7 to 11
                     )
@@ -62,7 +62,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
             }
             And("числитель отрицателен") {
                 Then("результат делится на их НОД") {
-                    eval(
+                    createAndValidate(
                         -3 * 5 * 7 to 5 * 11,
                         -3 * 7 to 11
                     )
@@ -70,7 +70,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
             }
             And("знаменатель отрицателен") {
                 Then("результат делится на их НОД и меняются знаки") {
-                    eval(
+                    createAndValidate(
                         3 * 5 * 7 to -5 * 11,
                         -3 * 7 to 11
                     )
@@ -78,7 +78,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
             }
             And("они отрицательны") {
                 Then("результат делится на их НОД") {
-                    eval(
+                    createAndValidate(
                         -3 * 5 * 7 to -5 * 11,
                         3 * 7 to 11
                     )
