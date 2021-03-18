@@ -3,7 +3,6 @@ package jvmusin.universalconverter.number;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
-import java.util.Locale;
 import lombok.Data;
 
 /**
@@ -99,11 +98,8 @@ public class BigIntFractionNumber implements Number<BigIntFractionNumber> {
 
   @Override
   public String toString() {
-    // TODO test it
-    MathContext mc = MathContext.DECIMAL128;
-    BigDecimal d = new BigDecimal(numerator).divide(new BigDecimal(denominator), mc);
-    return String.format(Locale.ENGLISH, "%f", d);
-    //        String result = d.toPlainString();
-    //        return result.replace(',', '.');
+    return new BigDecimal(numerator)
+        .divide(new BigDecimal(denominator), MathContext.DECIMAL128)
+        .toPlainString();
   }
 }
