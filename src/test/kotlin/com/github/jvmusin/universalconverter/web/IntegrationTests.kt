@@ -28,13 +28,13 @@ class IntegrationTests(@Autowired val restTemplate: TestRestTemplate) : StringSp
     init {
         "Приложение запускается" {}
 
-        "На запрос из ничего в ничего возвращает 1" {
+        "На запрос из ничего в ничего возвращается 1" {
             val response = convert("", "")
             response.statusCodeValue shouldBe 200
             response.body shouldBe "1"
         }
 
-        "На запрос из м в км*с/час возвращает (почти) 3.6" {
+        "На запрос из м в км*с/час возвращается (почти) 3.6" {
             val expected =
                 "3.59999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
             val response = convert("м", "км*с/час")
@@ -63,7 +63,7 @@ class IntegrationTests(@Autowired val restTemplate: TestRestTemplate) : StringSp
             response.statusCodeValue shouldBe 400
         }
 
-        "На неприводимые по длине дроби и на неизвестные величины одновременно возвращает код 404" {
+        "На неприводимые по длине дроби и на неизвестные величины одновременно возвращается код 404" {
             val response = convert("кг / с", "кг / год")
             response.statusCodeValue shouldBe 404
         }
