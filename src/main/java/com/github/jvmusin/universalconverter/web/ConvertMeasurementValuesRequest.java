@@ -13,7 +13,7 @@ public class ConvertMeasurementValuesRequest {
   /** Величина измерения, из которой необходимо сделать конвертацию. */
   private final String from;
 
-  /** Велична измерения, в которую нужно сделать конвертацию. */
+  /** Величина измерения, в которую нужно сделать конвертацию. */
   private final String to;
 
   /**

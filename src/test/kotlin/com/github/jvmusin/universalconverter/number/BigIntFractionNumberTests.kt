@@ -51,7 +51,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
                 }
             }
         }
-        When("числитель и знаменатель не взаимнопросты") {
+        When("числитель и знаменатель не взаимно просты") {
             And("они положительны") {
                 Then("результат делится на их НОД") {
                     createAndValidate(

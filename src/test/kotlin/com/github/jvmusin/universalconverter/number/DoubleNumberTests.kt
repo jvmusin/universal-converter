@@ -38,7 +38,7 @@ class DoubleNumberTests : StringSpec({
     "-3 не положительно" {
         DoubleNumber(-3.0).isPositive.shouldBeFalse()
     }
-    "13.565 в строку и в дабл даёт то же самое число" {
+    "13.565 в строку и в double даёт то же самое число" {
         val x = 13.565
         DoubleNumber(x).toString().toDouble() shouldBe x
     }
