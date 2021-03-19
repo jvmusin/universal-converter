@@ -3,7 +3,6 @@ package com.github.jvmusin.universalconverter.web
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.shouldBe
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
@@ -14,7 +13,7 @@ import org.springframework.http.HttpHeaders
 
 @SpringBootTest(webEnvironment = RANDOM_PORT, properties = ["csv=metrics.csv"])
 @EnableAutoConfiguration
-class IntegrationTests(@Autowired val restTemplate: TestRestTemplate) : StringSpec() {
+class IntegrationTests(private val restTemplate: TestRestTemplate) : StringSpec() {
     override fun extensions() = listOf(SpringExtension)
 
     private fun convert(from: String, to: String) = restTemplate.postForEntity<String>(
