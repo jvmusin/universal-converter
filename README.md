@@ -134,7 +134,7 @@
 Самый простой, быстрый и, к сожалению, неточный тип данных.  
 Быстро теряет точность и уже на небольших сетях будет накапливать большую погрешность.  
 2 из 10, не рекомендую.  
-Реализован в [DoubleNumber](src/main/java/com/github/jvmusin/universalconverter/number/DoubleNumber.java).
+Реализован в [DoubleNumber].
 
 #### Дроби на BigInteger
 
@@ -143,16 +143,20 @@
 измерения абсолютно без каких-либо погрешностей, но за это придётся заплатить большим потреблением
 памяти и медленной работой конвертера в целом.  
 7 из 10, использовать можно, если граф конвертаций не слишком большой.  
-Реализован
-в [BigIntFractionNumber](src/main/java/com/github/jvmusin/universalconverter/number/BigIntFractionNumber.java).
+Реализован в [BigIntFractionNumber].
 
 #### BigDecimal
 
 Точнее, чем `Double`, быстрее, чем дроби, но погрешности остаются.  
 Самый простой способ подсчёта с настраиваемой погрешностью.  
 8 из 10, используется по умолчанию в конвертере.  
-Реализован
-в [BigDecimalNumber](src/main/java/com/github/jvmusin/universalconverter/number/BigDecimalNumber.java).
+Реализован в [BigDecimalNumber].
+
+[DoubleNumber]: src/main/java/com/github/jvmusin/universalconverter/number/DoubleNumber.java
+
+[BigIntFractionNumber]: src/main/java/com/github/jvmusin/universalconverter/number/BigIntFractionNumber.java
+
+[BigDecimalNumber]: src/main/java/com/github/jvmusin/universalconverter/number/BigDecimalNumber.java
 
 #### Другие способы избежать погрешностей
 
