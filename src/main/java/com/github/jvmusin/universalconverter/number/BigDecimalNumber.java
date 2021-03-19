@@ -11,7 +11,7 @@ import lombok.Data;
  * Обёртка для чисел типа {@link BigDecimal}.
  *
  * <p>Внутри себя держит кроме самого числа типа {@link BigDecimal} ещё и {@link MathContext},
- * используемый при выполении операций над {@link BigDecimal}.
+ * используемый при выполнении операций над {@link BigDecimal}.
  *
  * <p>При выполнении любых операций, возвращающих {@link BigDecimalNumber}, сохраняет текущий {@link
  * MathContext} в результате.

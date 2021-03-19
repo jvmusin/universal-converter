@@ -19,7 +19,7 @@ public interface MeasurementConverter<TWeight extends Number<TWeight>> {
    * c/d}, то эта функция найдёт коэффициент {@code K} такой, что {@code a/b = K * c/d}.
    *
    * @param from величина измерения, из которой производится перевод.
-   * @param to величина измерения, в которую произодится перевод.
+   * @param to величина измерения, в которую производится перевод.
    * @return Коэффициент соотношения величины измерения {@code from} к величине измерения {@code
    *     to}.
    * @throws NoSuchMeasurementException если в дробях присутствует неизвестная единица измерения.
