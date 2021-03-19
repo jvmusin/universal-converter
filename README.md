@@ -47,6 +47,10 @@
 В таком графе путь из `м` в `мм` имеет вес `1/1000` и означает, что в одном `м` содержится
 тысяча `мм`.
 
+Реализован в [MeasurementConverterImpl].
+
+[MeasurementConverterImpl]: src/main/java/com/github/jvmusin/universalconverter/converter/MeasurementConverterImpl.java
+
 ### Сеть конвертаций
 
 Граф конвертаций на самом деле состоит из множества сетей конвертаций, где каждая сеть отвечает за
@@ -70,6 +74,10 @@
 Построение сети конвертаций происходит с помощью обхода в ширину. Такой подход позволяет дойти от
 корневого элемента до всех остальных элементов, используя кратчайшие пути, а это, в свою очередь,
 заметно уменьшает накапливаемую погрешность весов в случайных графах.
+
+Реализован в [ConversionNetwork].
+
+[ConversionNetwork]: src/main/java/com/github/jvmusin/universalconverter/converter/network/ConversionNetwork.java
 
 ### Обработка запросов
 
