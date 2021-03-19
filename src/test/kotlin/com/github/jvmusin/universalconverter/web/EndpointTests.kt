@@ -33,7 +33,7 @@ class EndpointTests(private val mockMvc: MockMvc) : StringSpec() {
             mockMvc.shouldNotBeNull()
         }
 
-        "На м/c в км/час возвращает код 200 и результат 3.6" {
+        "На м/c в км/час возвращается код 200 и результат 3.6" {
             convert("м / с", "км / час") {
                 status { isOk() }
             }.andReturn().response.contentAsString.toDouble() shouldBe 3.6
@@ -64,7 +64,7 @@ class EndpointTests(private val mockMvc: MockMvc) : StringSpec() {
             }
         }
 
-        "На неприводимые по длине дроби и на неизвестные величины одновременно возвращает код 404" {
+        "На неприводимые по длине дроби и на неизвестные величины одновременно возвращается код 404" {
             convert("кг / с", "кг / год") {
                 status { isNotFound() }
             }
