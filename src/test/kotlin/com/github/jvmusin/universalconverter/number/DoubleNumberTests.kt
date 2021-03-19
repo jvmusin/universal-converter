@@ -9,13 +9,13 @@ import io.kotest.matchers.shouldBe
 
 class DoubleNumberTests : StringSpec({
     "3 * 9.1 = 18.3" {
-        DoubleNumber(3.0).multiplyBy(DoubleNumber(9.1)).value shouldBe (27.3 plusOrMinus 1e-10)
+        (DoubleNumber(3.0) * DoubleNumber(9.1)).value shouldBe (27.3 plusOrMinus 1e-10)
     }
     "3 / 2 = 1.5" {
-        DoubleNumber(3.0).divideBy(DoubleNumber(2.0)) shouldBe DoubleNumber(1.5)
+        (DoubleNumber(3.0) / DoubleNumber(2.0)) shouldBe DoubleNumber(1.5)
     }
     "3 / 0 = +INF" {
-        DoubleNumber(3.0).divideBy(DoubleNumber(0.0)).value.shouldBePositiveInfinity()
+        (DoubleNumber(3.0) / DoubleNumber(0.0)).value.shouldBePositiveInfinity()
     }
     "обратное к 5 = 0.2" {
         DoubleNumber(5.0).inverse() shouldBe DoubleNumber(0.2)

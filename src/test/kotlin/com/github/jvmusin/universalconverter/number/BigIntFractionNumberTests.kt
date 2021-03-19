@@ -6,9 +6,6 @@ import io.kotest.matchers.shouldBe
 
 class BigIntFractionNumberTests : BehaviorSpec({
 
-    operator fun BigIntFractionNumber.times(other: BigIntFractionNumber) = multiplyBy(other)
-    operator fun BigIntFractionNumber.div(other: BigIntFractionNumber) = divideBy(other)
-
     fun create(x: Int, y: Int = 1) = BigIntFractionNumber(x.toBigInteger(), y.toBigInteger())
 
     Given("создание") {
@@ -87,7 +84,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
         }
     }
 
-    Given("перемножение multiplyBy") {
+    Given("multiplyBy") {
         When("всё положительно") {
             Then("умножает как надо") {
                 create(3, 5) * create(7, 11) shouldBe create(3 * 7, 5 * 11)
@@ -106,7 +103,7 @@ class BigIntFractionNumberTests : BehaviorSpec({
         }
     }
 
-    Given("деление divideBy") {
+    Given("divideBy") {
         When("всё положительно") {
             Then("делит как надо") {
                 create(3, 5) / create(7, 11) shouldBe create(3 * 11, 5 * 7)
