@@ -18,20 +18,20 @@ import lombok.RequiredArgsConstructor;
 /**
  * Сеть величин измерения.
  *
- * <p>Позволяет переводить единицы измерения от одной к другой в пределах одной и той же системы
+ * <p>Позволяет переводить величины измерения от одной к другой в пределах одной и той же системы
  * счисления.
  *
- * <p>Назначает каждой единице измерения вес в зависимости от её относительной величины по отношению
- * к корневой единице измерения.
+ * <p>Назначает каждой величине измерения вес в зависимости от её относительной величины по
+ * отношению к корневой величине измерения.
  *
- * <p>Например, если корневая единица измерения - метр, то у метра будет вес, равный единице, а у
+ * <p>Например, если корневая величина измерения - метр, то у метра будет вес, равный величине, а у
  * километра вес, равный {@code 1000}. Если же корневой величиной измерения был километр, то его вес
- * будет единицей, а вес метра - {@code 1/1000}.
+ * будет величиной, а вес метра - {@code 1/1000}.
  *
  * @param <TWeight> тип весов, используемых сетью.
  */
 public class ConversionNetwork<TWeight extends Number<TWeight>> {
-  /** Словарь, в котором для каждой единицы измерения этой сети лежит соответствующий ей вес. */
+  /** Словарь, в котором для каждой величины измерения этой сети лежит соответствующий ей вес. */
   private final Map<String, TWeight> weights;
 
   /**
@@ -52,9 +52,9 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
   }
 
   /**
-   * Возвращает все единицы измерения в этой сети.
+   * Возвращает все величины измерения в этой сети.
    *
-   * @return Все единицы измерения в этой сети.
+   * @return Все величины измерения в этой сети.
    */
   public Set<String> getMeasurements() {
     return weights.keySet();
@@ -63,15 +63,15 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
   /**
    * Конвертирует величину измерения в присвоенный ей коэффициент.
    *
-   * @param measurement единица измерения.
-   * @return Коэффициент, присвоенный этой единице измерения.
-   * @throws NoSuchMeasurementException если запрашиваемой единицы измерения в этой сети нет.
+   * @param measurement величина измерения.
+   * @return Коэффициент, присвоенный этой величине измерения.
+   * @throws NoSuchMeasurementException если запрашиваемой величины измерения в этой сети нет.
    */
   public TWeight convertToCoefficient(String measurement) {
     TWeight result = weights.get(measurement);
     if (result == null)
       throw new NoSuchMeasurementException(
-          "В этой сети нет нужной единицы измерения: " + measurement);
+          "В этой сети нет нужной величины измерения: " + measurement);
     return result;
   }
 
@@ -134,13 +134,14 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
             throw new NonPositiveWeightRuleException(
                 "В сети существует правило с неположительным весом: " + rule);
           }
-          TWeight smallPieceWeight = currentWeight.divideBy(rule.getSmallPieceCount());
-          if (!weights.containsKey(rule.getSmallPiece())) {
-            save(rule.getSmallPiece(), smallPieceWeight);
-            queue.add(new MeasurementNode(rule.getSmallPiece(), smallPieceWeight));
+          TWeight bigPieceWeight = currentWeight.multiplyBy(rule.getSmallPieceCount());
+          String bigPiece = rule.getBigPiece();
+          if (!weights.containsKey(bigPiece)) {
+            save(bigPiece, bigPieceWeight);
+            queue.add(new MeasurementNode(bigPiece, bigPieceWeight));
           }
 
-          // TODO: Compare smallPieceWeight to weights[rule.smallPiece]
+          // TODO: Compare bigPieceWeight to weights[rule.bigPiece]
           //  to ensure that there are no incorrect rules so that we can have
           //  infinitely-high-weight and infinitely-zero-weight cycles.
           //  It's not done because I have no clue how to correctly compare doubles here
@@ -152,7 +153,7 @@ public class ConversionNetwork<TWeight extends Number<TWeight>> {
     }
 
     /**
-     * Класс, используемый для хранения информации о единице измерения в обходе в ширину в {@link
+     * Класс, используемый для хранения информации о величине измерения в обходе в ширину в {@link
      * #build()}.
      */
     @Data

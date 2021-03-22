@@ -4,7 +4,7 @@ import com.github.jvmusin.universalconverter.number.Number;
 import lombok.Data;
 
 /**
- * Класс, описывающий соотношение одной единицы измерения к другой.
+ * Класс, описывающий соотношение одной величины измерения к другой.
  *
  * <p>В одном {@code bigPiece} содержится {@code smallPieceCount} единиц {@code smallPiece}.
  *

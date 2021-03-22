@@ -54,7 +54,7 @@ public class MeasurementConverterImpl<TWeight extends Number<TWeight>>
   private final List<ConversionNetwork<TWeight>> networks;
 
   /**
-   * Словарь, в котором для каждой единицы измерения указан индекс сети, которой она принадлежит.
+   * Словарь, в котором для каждой величины измерения указан индекс сети, которой она принадлежит.
    */
   private final Map<String, Integer> measurementToNetworkIndex;
 
@@ -67,12 +67,12 @@ public class MeasurementConverterImpl<TWeight extends Number<TWeight>>
    * @param measurement величина измерения, для которой нужно вернуть индекс сети, которой она
    *     принадлежит.
    * @return Индекс сети, которой принадлежит величина измерения {@code measurement}.
-   * @throws NoSuchMeasurementException если такой единицы измерения нет ни в одной известной сети.
+   * @throws NoSuchMeasurementException если такой величины измерения нет ни в одной известной сети.
    */
   private int getNetworkIndex(String measurement) {
     Integer index = measurementToNetworkIndex.get(measurement);
     if (index == null)
-      throw new NoSuchMeasurementException("Единица измерения не найдена: " + measurement);
+      throw new NoSuchMeasurementException("Величина измерения не найдена: " + measurement);
     return index;
   }
 
@@ -133,20 +133,20 @@ public class MeasurementConverterImpl<TWeight extends Number<TWeight>>
   }
 
   /**
-   * Проверяет, известны ли все единицы измерения в списке.
+   * Проверяет, известны ли все величины измерения в списке.
    *
-   * @param measurements единицы измерения для проверки.
-   * @throws NoSuchMeasurementException если в списке есть неизвестная единица измерения.
+   * @param measurements величины измерения для проверки.
+   * @throws NoSuchMeasurementException если в списке есть неизвестная величина измерения.
    */
   private void makeSureMeasurementsExist(List<String> measurements) {
     measurements.forEach(this::getNetworkIndex);
   }
 
   /**
-   * Проверяет, известны ли все единицы измерения в числителе и в знаменателе дроби.
+   * Проверяет, известны ли все величины измерения в числителе и в знаменателе дроби.
    *
    * @param fraction дробь для проверки.
-   * @throws NoSuchMeasurementException если в дроби есть неизвестная единица измерения.
+   * @throws NoSuchMeasurementException если в дроби есть неизвестная величина измерения.
    */
   private void makeSureMeasurementsExist(ComplexFraction<String> fraction) {
     makeSureMeasurementsExist(fraction.getNumerator());
@@ -167,7 +167,7 @@ public class MeasurementConverterImpl<TWeight extends Number<TWeight>>
    * @param to величина измерения, в которую производится перевод.
    * @return Коэффициент соотношения величины измерения {@code from} к величине измерения {@code
    *     to}.
-   * @throws NoSuchMeasurementException если в дробях присутствует неизвестная единица измерения.
+   * @throws NoSuchMeasurementException если в дробях присутствует неизвестная величина измерения.
    * @throws ConversionException если в результирующей дроби числитель и знаменатель имеют разную
    *     длину или если невозможно создать биекцию между элементами числителя и знаменателя, где
    *     элементы могут быть соединены только если они принадлежат одной и той же сети.

@@ -33,12 +33,10 @@ class IntegrationTests(private val restTemplate: TestRestTemplate) : StringSpec(
             response.body shouldBe "1"
         }
 
-        "На запрос из м в км*с/час возвращается (почти) 3.6" {
-            val expected =
-                "3.59999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+        "На запрос из м в км*с/час возвращается 3.600" {
             val response = convert("м", "км*с/час")
             response.statusCodeValue shouldBe 200
-            response.body shouldBe expected
+            response.body shouldBe "3.600"
         }
 
         "На приведение километров к метрам возвращается результат 1000" {

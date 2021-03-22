@@ -4,16 +4,16 @@ import com.github.jvmusin.universalconverter.fraction.ComplexFraction;
 import lombok.Data;
 
 /**
- * Класс, описывающий запрос на конвертацию единицы измерения из {@code from} в {@code to}.
+ * Класс, описывающий запрос на конвертацию величины измерения из {@code from} в {@code to}.
  *
  * <p>Используется как сущность, отправляемая в теле запроса на {@code HTTP} метод {@code /convert}.
  */
 @Data
 public class ConvertMeasurementValuesRequest {
-  /** Величина измерения, из которой необходимо сделать конвертацию. */
+  /** Величина измерения, из которой нужно произвести конвертацию. */
   private final String from;
 
-  /** Величина измерения, в которую нужно сделать конвертацию. */
+  /** Величина измерения, в которую нужно произвести конвертацию. */
   private final String to;
 
   /**
