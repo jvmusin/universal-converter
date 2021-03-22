@@ -29,34 +29,28 @@ public class WebUtils {
         IntStream.range(0, expression.length()).filter(i -> expression.charAt(i) == '/').toArray();
     switch (delimiterPositions.length) {
       case 0:
-        {
-          String[] parts = expression.split("[*]", -1);
-          if (Arrays.stream(parts).anyMatch(String::isEmpty)) {
-            throw new MalformedExpressionException(
-                "Выражение имеет знак умножения, "
-                    + "не окружённый с обеих сторон величинами измерения: "
-                    + expression);
-          }
-          return new ComplexFraction<>(asList(parts), emptyList());
-        }
-      case 1:
-        {
-          int delimiterPosition = delimiterPositions[0];
-          String numerator = expression.substring(0, delimiterPosition);
-          String denominator = expression.substring(delimiterPosition + 1);
-          if (numerator.isEmpty() || denominator.isEmpty()) {
-            throw new MalformedExpressionException(
-                "Знак деления должен разделять две непустые части: " + expression);
-          }
-          return new ComplexFraction<>(
-              convertExpressionToFraction(numerator).getNumerator(),
-              convertExpressionToFraction(denominator).getNumerator());
-        }
-      default:
-        {
+        String[] parts = expression.split("[*]", -1);
+        if (Arrays.stream(parts).anyMatch(String::isEmpty)) {
           throw new MalformedExpressionException(
-              "В выражении разрешено не больше одного знака деления: " + expression);
+              "Выражение имеет знак умножения, "
+                  + "не окружённый с обеих сторон величинами измерения: "
+                  + expression);
         }
+        return new ComplexFraction<>(asList(parts), emptyList());
+      case 1:
+        int delimiterPosition = delimiterPositions[0];
+        String numerator = expression.substring(0, delimiterPosition);
+        String denominator = expression.substring(delimiterPosition + 1);
+        if (numerator.isEmpty() || denominator.isEmpty()) {
+          throw new MalformedExpressionException(
+              "Знак деления должен разделять две непустые части: " + expression);
+        }
+        return new ComplexFraction<>(
+            convertExpressionToFraction(numerator).getNumerator(),
+            convertExpressionToFraction(denominator).getNumerator());
+      default:
+        throw new MalformedExpressionException(
+            "В выражении разрешено не больше одного знака деления: " + expression);
     }
   }
 }

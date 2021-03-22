@@ -59,7 +59,7 @@ public class ListUtils {
    * @return Словарь {@link Map Map&lt;K, List&lt;T&gt;&gt;}, содержащий все элементы списка.
    * @throws IllegalArgumentException если список {@code list} или функция {@code extractKey} равны
    *     {@code null}.
-   * @throws NullPointerException если {@code extractKey} возвращает {@code null}.
+   * @throws NullPointerException если {@code extractKey} вернул {@code null}.
    */
   public static <T, K> Map<K, List<T>> groupList(List<T> list, Function<T, K> extractKey) {
     Assert.notNull(list, "Список не может быть равен null");
