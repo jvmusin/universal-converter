@@ -208,7 +208,7 @@ java -jar target/universal-converter-1.0.0.jar metrics.csv
 
 Тестирование:
 
-- Kotlin 1.4.31
+- Kotlin 1.4.32
 - Kotest 4.4.3
 - Spring Boot Test
 - Jackson 2.12.2
