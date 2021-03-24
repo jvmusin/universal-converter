@@ -1,5 +1,8 @@
 # Universal Converter
 
+[![Maven Java CI](https://github.com/jvmusin/universal-converter/actions/workflows/java-maven-build.yml/badge.svg)](https://github.com/jvmusin/universal-converter/actions/workflows/java-maven-build.yml)
+[![Google Java Format](https://github.com/jvmusin/universal-converter/actions/workflows/java-google-format.yml/badge.svg)](https://github.com/jvmusin/universal-converter/actions/workflows/java-google-format.yml)
+
 Проект является решением тестового задания на Java-стажировку 2021 в Контур.  
 Оригинал задания доступен в файле [TASK.md](TASK.md) и
 в [оригинальном репозитории](https://github.com/gnkoshelev/universal-converter).
