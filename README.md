@@ -4,6 +4,9 @@
 Оригинал задания доступен в файле [TASK.md](TASK.md) и
 в [оригинальном репозитории](https://github.com/gnkoshelev/universal-converter).
 
+[![Maven Java CI](https://github.com/jvmusin/universal-converter/actions/workflows/java-maven-build.yml/badge.svg)](https://github.com/jvmusin/universal-converter/actions/workflows/java-maven-build.yml)
+[![Google Java Format](https://github.com/jvmusin/universal-converter/actions/workflows/java-google-format.yml/badge.svg)](https://github.com/jvmusin/universal-converter/actions/workflows/java-google-format.yml)
+
 ## Вкратце
 
 Проект представляет собой *HTTP-сервис*, предоставляющий единственный *POST* метод `/convert`.  
