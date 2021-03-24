@@ -1,19 +1,23 @@
 package com.github.jvmusin.universalconverter.converter
 
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory
 import com.github.jvmusin.universalconverter.number.DoubleNumber
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class MeasurementConverterUtilsTests : BehaviorSpec({
-    Given("buildConversionGraph") {
+class ConversionGraphFactoryTests : BehaviorSpec({
+
+    val factory = ConversionGraphFactory()
+
+    Given("create") {
         When("всё хорошо") {
             Then("создаёт граф переходов") {
                 val rules = listOf(
                     ConversionRule("n16", "n4", 4.0),
                     ConversionRule("n4", "n20", 0.25)
                 )
-                val graph = MeasurementConverterUtils.buildConversionGraph(rules)
+                val graph = factory.create(rules)
                 graph shouldBe mapOf(
                     "n16" to listOf(ConversionRule("n4", "n16", 0.25)),
                     "n4" to listOf(
@@ -26,9 +30,7 @@ class MeasurementConverterUtilsTests : BehaviorSpec({
         }
         When("список правил равен null") {
             Then("бросает IllegalArgumentException") {
-                shouldThrow<IllegalArgumentException> {
-                    MeasurementConverterUtils.buildConversionGraph<DoubleNumber>(null)
-                }
+                shouldThrow<IllegalArgumentException> { factory.create<DoubleNumber>(null) }
             }
         }
         When("список правил содержит null") {
@@ -38,9 +40,13 @@ class MeasurementConverterUtilsTests : BehaviorSpec({
                     null,
                     ConversionRule("b", "c", 4.0)
                 )
-                shouldThrow<IllegalArgumentException> {
-                    MeasurementConverterUtils.buildConversionGraph(rules)
-                }
+                shouldThrow<IllegalArgumentException> { factory.create(rules) }
+            }
+        }
+        When("существует правило с коэффициентом 0") {
+            Then("бросает ...") {
+                // TODO fix the test
+                val graph = factory.create(listOf(ConversionRule("a", "b", 0.0)))
             }
         }
     }

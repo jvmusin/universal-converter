@@ -1,23 +1,19 @@
 package com.github.jvmusin.universalconverter.converter.network
 
-import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.should
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.beInstanceOf
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.list
-import io.kotest.property.arbitrary.of
-import io.kotest.property.checkAll
 import com.github.jvmusin.universalconverter.converter.ConversionRule
 import com.github.jvmusin.universalconverter.converter.exception.NoSuchMeasurementException
-import com.github.jvmusin.universalconverter.converter.network.exception.ConversionNetworkBuildException
-import com.github.jvmusin.universalconverter.converter.network.exception.NonPositiveWeightRuleException
 import com.github.jvmusin.universalconverter.converter.sampleConversionGraph
 import com.github.jvmusin.universalconverter.converter.sampleRules
 import com.github.jvmusin.universalconverter.converter.toConversionGraph
 import com.github.jvmusin.universalconverter.number.DoubleNumber
 import com.github.jvmusin.universalconverter.number.DoubleNumberFactory
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.list
+import io.kotest.property.arbitrary.of
+import io.kotest.property.checkAll
 
 class ConversionNetworkTests : StringSpec({
 
@@ -26,7 +22,7 @@ class ConversionNetworkTests : StringSpec({
         conversionGraph: Map<String, List<ConversionRule<DoubleNumber>>>,
         root: String
     ): ConversionNetwork<DoubleNumber> {
-        return ConversionNetwork(conversionGraph, root, DoubleNumberFactory())
+        return ConversionNetworkFactory().create(conversionGraph, root, DoubleNumberFactory())
     }
 
     "Сеть строится при верных правилах" {
@@ -47,14 +43,14 @@ class ConversionNetworkTests : StringSpec({
         val rules = (sampleRules + ConversionRule("м", "метро", 0.0))
         shouldThrow<NonPositiveWeightRuleException> {
             ConversionNetwork(rules.toConversionGraph(), "м")
-        } should beInstanceOf<ConversionNetworkBuildException>()
+        }
     }
 
     "Сеть бросает NonPositiveWeightRuleException при наличии отрицательных рёбер" {
         val rules = (sampleRules + ConversionRule("м", "метро", -42.0))
         shouldThrow<NonPositiveWeightRuleException> {
             ConversionNetwork(rules.toConversionGraph(), "м")
-        } should beInstanceOf<ConversionNetworkBuildException>()
+        }
     }
 
     "Сеть бросает NoSuchMeasurementException при запросе несуществующей величины на convertToCoefficient" {

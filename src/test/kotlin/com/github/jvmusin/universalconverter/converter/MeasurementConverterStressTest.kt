@@ -1,20 +1,28 @@
 package com.github.jvmusin.universalconverter.converter
 
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
 import com.github.jvmusin.universalconverter.converter.factory.MeasurementConverterFactoryImpl
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory
+import com.github.jvmusin.universalconverter.converter.network.ConversionNetworkFactory
 import com.github.jvmusin.universalconverter.fraction.ComplexFraction
 import com.github.jvmusin.universalconverter.number.BigDecimalNumber
 import com.github.jvmusin.universalconverter.number.BigDecimalNumberFactory
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import java.math.BigDecimal.ONE
 import java.math.MathContext
 
 class MeasurementConverterStressTest : StringSpec({
-    "При длинной цепочке умножений или делений на 10, точность не теряется" {
+    "При длинной цепочке умножений или делений на 10 точность не теряется" {
         val n = 50_000
         val mc = MathContext.DECIMAL128
         val numberFactory = BigDecimalNumberFactory(mc)
-        val measurementConverterFactory = MeasurementConverterFactoryImpl(numberFactory)
+        val conversionNetworkFactory = ConversionNetworkFactory()
+        val conversionGraphFactory = ConversionGraphFactory()
+        val measurementConverterFactory = MeasurementConverterFactoryImpl(
+            numberFactory,
+            conversionNetworkFactory,
+            conversionGraphFactory
+        )
         val rules = List(n - 1) {
             ConversionRule("n${it + 1}", "n${it + 2}", numberFactory.parse("0.1"))
         }

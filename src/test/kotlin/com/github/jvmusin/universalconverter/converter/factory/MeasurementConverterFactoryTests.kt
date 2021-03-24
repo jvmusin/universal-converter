@@ -4,12 +4,14 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory
+import com.github.jvmusin.universalconverter.converter.network.ConversionNetworkFactory
 import com.github.jvmusin.universalconverter.converter.sampleRules
 import com.github.jvmusin.universalconverter.fraction.ComplexFraction
 import com.github.jvmusin.universalconverter.number.DoubleNumberFactory
 
 class MeasurementConverterFactoryTests : BehaviorSpec() {
-    private val converterFactory = MeasurementConverterFactoryImpl(DoubleNumberFactory())
+    private val converterFactory = MeasurementConverterFactoryImpl(DoubleNumberFactory(), ConversionNetworkFactory(), ConversionGraphFactory())
 
     init {
         Given("создание конвертера create") {

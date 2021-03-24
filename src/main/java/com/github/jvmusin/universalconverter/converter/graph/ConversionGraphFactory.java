@@ -1,15 +1,21 @@
-package com.github.jvmusin.universalconverter.converter;
+package com.github.jvmusin.universalconverter.converter.graph;
 
 import static com.github.jvmusin.universalconverter.ListUtils.groupList;
 import static com.github.jvmusin.universalconverter.ListUtils.mapList;
 import static com.github.jvmusin.universalconverter.ListUtils.mergeLists;
 
+import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.number.Number;
 import java.util.List;
 import java.util.Map;
 import org.springframework.util.Assert;
 
-public class MeasurementConverterUtils {
+/**
+ * Фабрика, используемая для создания графа конвертаций.
+ *
+ * @see #create(List)
+ */
+public class ConversionGraphFactory {
 
   /**
    * Строит по заданным правилам конвертации {@code rules} граф конвертации с весами типа {@link
@@ -38,15 +44,14 @@ public class MeasurementConverterUtils {
    * один метр больше одного миллиметра.
    *
    * @param rules правила конвертации.
-   * @param <TWeight> тип весов в правилах конвертации и в графе.
+   * @param <TWeight> тип весов в правилах.
    * @return Граф конвертации в виде словаря, где ключ - величина измерения, значение - все правила,
    *     напрямую относящиеся к этой величине измерения.
    * @throws IllegalArgumentException если список правил или хотя бы одно правило равно {@code
    *     null}.
    */
-  public static <TWeight extends Number<TWeight>>
-      Map<String, List<ConversionRule<TWeight>>> buildConversionGraph(
-          List<ConversionRule<TWeight>> rules) {
+  public <TWeight extends Number<TWeight>> Map<String, List<ConversionRule<TWeight>>> create(
+      List<ConversionRule<TWeight>> rules) {
     Assert.notNull(rules, "Список правил не может быть равен null");
     Assert.noNullElements(rules, "Список правил не может содержать null");
     List<ConversionRule<TWeight>> inverseRules = mapList(rules, ConversionRule::inverse);

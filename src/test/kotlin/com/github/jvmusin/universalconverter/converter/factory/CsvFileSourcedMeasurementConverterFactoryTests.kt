@@ -5,12 +5,14 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory
+import com.github.jvmusin.universalconverter.converter.network.ConversionNetworkFactory
 import com.github.jvmusin.universalconverter.fraction.ComplexFraction
 import com.github.jvmusin.universalconverter.number.DoubleNumberFactory
 import java.nio.file.Path
 
 class CsvFileSourcedMeasurementConverterFactoryTests : BehaviorSpec() {
-    private val converterFactory = CsvFileSourcedMeasurementConverterFactory(DoubleNumberFactory())
+    private val converterFactory = CsvFileSourcedMeasurementConverterFactory(DoubleNumberFactory(), ConversionNetworkFactory(), ConversionGraphFactory())
 
     private fun writeRules(vararg rules: String): Path {
         return tempfile("rules", ".csv").apply { writeText(rules.joinToString("\n")) }.toPath()

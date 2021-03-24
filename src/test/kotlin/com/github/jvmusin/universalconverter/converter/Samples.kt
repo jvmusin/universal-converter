@@ -1,6 +1,8 @@
 package com.github.jvmusin.universalconverter.converter
 
 import com.github.jvmusin.universalconverter.converter.factory.MeasurementConverterFactoryImpl
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory
+import com.github.jvmusin.universalconverter.converter.network.ConversionNetworkFactory
 import com.github.jvmusin.universalconverter.number.DoubleNumber
 import com.github.jvmusin.universalconverter.number.DoubleNumberFactory
 import com.github.jvmusin.universalconverter.number.Number
@@ -14,6 +16,11 @@ fun ConversionRule(
     return ConversionRule(bigPiece, smallPiece, DoubleNumber(weight))
 }
 
+val doubleNumberFactory = DoubleNumberFactory()
+val conversionGraphFactory =
+    ConversionGraphFactory()
+val conversionNetworkFactory = ConversionNetworkFactory()
+
 val sampleRules
     get() = listOf(
         ConversionRule("м", "см", 100.0),
@@ -24,10 +31,14 @@ val sampleRules
     )
 
 fun <T : Number<T>> List<ConversionRule<T>>.toConversionGraph(): Map<String, List<ConversionRule<T>>> =
-    MeasurementConverterUtils.buildConversionGraph(this)
+    conversionGraphFactory.create(this)
 
 val sampleConverter: MeasurementConverter<DoubleNumber>
-    get() = MeasurementConverterFactoryImpl(DoubleNumberFactory()).create(sampleRules)
+    get() = MeasurementConverterFactoryImpl(
+        doubleNumberFactory,
+        conversionNetworkFactory,
+        conversionGraphFactory
+    ).create(sampleRules)
 
-val sampleConversionGraph: MutableMap<String, MutableList<ConversionRule<DoubleNumber>>>
-    get() = MeasurementConverterUtils.buildConversionGraph(sampleRules)
+val sampleConversionGraph: Map<String, List<ConversionRule<DoubleNumber>>>
+    get() = sampleRules.toConversionGraph()

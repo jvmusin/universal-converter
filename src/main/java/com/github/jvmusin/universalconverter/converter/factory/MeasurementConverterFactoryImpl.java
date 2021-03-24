@@ -3,9 +3,10 @@ package com.github.jvmusin.universalconverter.converter.factory;
 import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverterImpl;
-import com.github.jvmusin.universalconverter.converter.MeasurementConverterUtils;
 import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory;
 import com.github.jvmusin.universalconverter.converter.network.ConversionNetwork;
+import com.github.jvmusin.universalconverter.converter.network.ConversionNetworkFactory;
 import com.github.jvmusin.universalconverter.number.Number;
 import com.github.jvmusin.universalconverter.number.NumberFactory;
 import java.util.ArrayList;
@@ -31,13 +32,19 @@ public class MeasurementConverterFactoryImpl<TWeight extends Number<TWeight>>
   /** Фабрика, используемая для создания весов типа {@link TWeight}. */
   protected final NumberFactory<TWeight> weightFactory;
 
+  /** Фабрика, используемая для создания сетей конвертации {@link ConversionNetwork}. */
+  private final ConversionNetworkFactory conversionNetworkFactory;
+
+  /** Фабрика, используемая для создания графов конвертации. */
+  private final ConversionGraphFactory conversionGraphFactory;
+
   @Override
   public MeasurementConverter<TWeight> create(List<ConversionRule<TWeight>> conversionRules) {
     try {
       Assert.notNull(conversionRules, "Список правил равен null");
       Assert.noNullElements(conversionRules, "В правилах конвертации присутствует null");
       Map<String, List<ConversionRule<TWeight>>> conversionGraph =
-          MeasurementConverterUtils.buildConversionGraph(conversionRules);
+          conversionGraphFactory.create(conversionRules);
       Set<String> usedMeasurements = new HashSet<>();
       Map<String, Integer> measurementToNetworkIndex = new HashMap<>();
       List<ConversionNetwork<TWeight>> networks = new ArrayList<>();
@@ -46,7 +53,7 @@ public class MeasurementConverterFactoryImpl<TWeight extends Number<TWeight>>
         if (!usedMeasurements.contains(measurement)) {
           int networkIndex = networks.size();
           ConversionNetwork<TWeight> network =
-              new ConversionNetwork<>(conversionGraph, measurement, weightFactory);
+              conversionNetworkFactory.create(conversionGraph, measurement, weightFactory);
           networks.add(network);
           Set<String> networkMeasurements = network.getMeasurements();
           usedMeasurements.addAll(networkMeasurements);

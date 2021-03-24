@@ -6,6 +6,8 @@ import static java.util.stream.Collectors.toList;
 import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
 import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory;
+import com.github.jvmusin.universalconverter.converter.network.ConversionNetworkFactory;
 import com.github.jvmusin.universalconverter.number.Number;
 import com.github.jvmusin.universalconverter.number.NumberFactory;
 import java.nio.file.Files;
@@ -37,8 +39,11 @@ public class CsvFileSourcedMeasurementConverterFactory<TWeight extends Number<TW
         Assert.isTrue(stream(row).noneMatch(String::isEmpty), EMPTY_TOKEN_MESSAGE);
       };
 
-  public CsvFileSourcedMeasurementConverterFactory(NumberFactory<TWeight> weightFactory) {
-    super(weightFactory);
+  public CsvFileSourcedMeasurementConverterFactory(
+      NumberFactory<TWeight> weightFactory,
+      ConversionNetworkFactory conversionNetworkFactory,
+      ConversionGraphFactory conversionGraphFactory) {
+    super(weightFactory, conversionNetworkFactory, conversionGraphFactory);
   }
 
   /**
