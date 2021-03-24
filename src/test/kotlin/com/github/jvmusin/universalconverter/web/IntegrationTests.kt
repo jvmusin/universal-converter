@@ -45,24 +45,24 @@ class IntegrationTests(private val restTemplate: TestRestTemplate) : StringSpec(
             response.body shouldBe "1000"
         }
 
-        "На неизвестную величину возвращается код 404" {
+        "На неизвестную величину возвращается код 400" {
             val response = convert("м / с", "км / пингвин")
-            response.statusCodeValue shouldBe 404
+            response.statusCodeValue shouldBe 400
         }
 
-        "На неприводимые величины возвращается код 400" {
+        "На неприводимые величины возвращается код 404" {
             val response = convert("м / с", "м / м")
-            response.statusCodeValue shouldBe 400
-        }
-
-        "На неприводимые по длине дроби возвращается код 400" {
-            val response = convert("м / с", "м * м / с")
-            response.statusCodeValue shouldBe 400
-        }
-
-        "На неприводимые по длине дроби и на неизвестные величины одновременно возвращается код 404" {
-            val response = convert("кг / с", "кг / год")
             response.statusCodeValue shouldBe 404
+        }
+
+        "На неприводимые по длине дроби возвращается код 404" {
+            val response = convert("м / с", "м * м / с")
+            response.statusCodeValue shouldBe 404
+        }
+
+        "На неприводимые по длине дроби и на неизвестные величины одновременно возвращается код 400" {
+            val response = convert("кг / с", "кг / год")
+            response.statusCodeValue shouldBe 400
         }
     }
 }

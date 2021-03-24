@@ -20,11 +20,11 @@ public class ConversionExceptionHandler extends ResponseEntityExceptionHandler {
    * Request} и текст исключения в теле ответа.
    *
    * @param e выброшенное исключение.
-   * @return {@link ResponseEntity} с кодом {@code 400} и текстом исключения в теле ответа.
+   * @return {@link ResponseEntity} с кодом {@code 404} и текстом исключения в теле ответа.
    */
   @ExceptionHandler(ConversionException.class)
   public ResponseEntity<String> handleConversionException(ConversionException e) {
-    return ResponseEntity.badRequest().body(e.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
   }
 
   /**
@@ -32,10 +32,10 @@ public class ConversionExceptionHandler extends ResponseEntityExceptionHandler {
    * Not Found} и текст исключения в теле ответа.
    *
    * @param e выброшенное исключение.
-   * @return {@link ResponseEntity} с кодом {@code 404} и текстом исключения в теле ответа.
+   * @return {@link ResponseEntity} с кодом {@code 400} и текстом исключения в теле ответа.
    */
   @ExceptionHandler(NoSuchMeasurementException.class)
   public ResponseEntity<String> handleNoSuchMeasurementException(NoSuchMeasurementException e) {
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
   }
 }
