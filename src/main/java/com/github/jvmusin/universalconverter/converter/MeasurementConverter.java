@@ -9,6 +9,7 @@ import com.github.jvmusin.universalconverter.converter.exception.ConversionExcep
 import com.github.jvmusin.universalconverter.converter.exception.MismatchedDimensionalityException;
 import com.github.jvmusin.universalconverter.converter.exception.NoSuchMeasurementException;
 import com.github.jvmusin.universalconverter.converter.graph.ConversionGraph;
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory;
 import com.github.jvmusin.universalconverter.converter.graph.WeightedMeasurement;
 import com.github.jvmusin.universalconverter.fraction.ComplexFraction;
 import com.github.jvmusin.universalconverter.number.Number;
@@ -23,17 +24,8 @@ import lombok.RequiredArgsConstructor;
  * <p>Для нахождения коэффициента {@code K} в уравнении вида {@code a/b = K * c/d} используется
  * преобразование вида {@code K = (a/b)*(d/c) = (a*d)/(b*c)}.
  *
- * <p>Получение коэффициентов дроби происходит через приведение числителя и знаменателя к корневой
- * величине соответствующей сети.
- *
- * <p>Допустим, необходимо перевести километры в сантиметры, а корневой величиной измерения являются
- * метры. Тогда вес километра равен {@code 1000}, вес метра равен {@code 1}, вес сантиметра равен
- * {@code 1/100=0.01}.
- *
- * <p>Сначала приводим {@code 1км} к метрам, для этого домножим {@code 1км} на вес километра ({@code
- * 1000}), получим {@code 1000м}. Затем приводим {@code 1000м} к сантиметрам, для этого поделим
- * {@code 1000м} на вес сантиметра ({@code 0.01}), получим {@code 100'000см}. Получается, в одном
- * километре сто тысяч сантиметров.
+ * <p>Получение коэффициентов дроби происходит через получение весов величин относительно корневой.
+ * Для этого используется {@link ConversionGraph}.
  *
  * <p>Для того, чтобы получить коэффициент сложной дроби, где числитель и знаменатель состоят из
  * нескольких величин измерения, построим какую-нибудь биекцию между элементами числителя и
@@ -49,6 +41,8 @@ import lombok.RequiredArgsConstructor;
  * знаменателя взяты два элемента на одинаковых индексах.
  *
  * @param <TWeight> тип весов, используемых конвертером.
+ * @see ConversionGraph
+ * @see ConversionGraphFactory
  */
 @RequiredArgsConstructor
 public class MeasurementConverter<TWeight extends Number<TWeight>> {
