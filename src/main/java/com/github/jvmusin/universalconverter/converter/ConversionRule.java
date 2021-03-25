@@ -14,6 +14,8 @@ import lombok.Data;
 public class ConversionRule<TWeight extends Number<TWeight>> {
   private final String bigPiece;
   private final String smallPiece;
+
+  /** Количество единиц {@code smallPiece} в одном {@code bigPiece}. */
   private final TWeight smallPieceCount;
 
   /**

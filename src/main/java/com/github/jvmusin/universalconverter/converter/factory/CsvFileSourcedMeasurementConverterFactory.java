@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toList;
 import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
 import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory;
 import com.github.jvmusin.universalconverter.number.Number;
 import com.github.jvmusin.universalconverter.number.NumberFactory;
 import java.nio.file.Files;
@@ -25,7 +26,7 @@ import org.springframework.util.Assert;
  */
 @Log4j2
 public class CsvFileSourcedMeasurementConverterFactory<TWeight extends Number<TWeight>>
-    extends MeasurementConverterFactoryImpl<TWeight> {
+    extends MeasurementConverterFactory<TWeight> {
 
   public static final String MORE_THAN_THREE_TOKENS_MESSAGE = "Строка состоит не из трёх токенов";
   public static final String EMPTY_TOKEN_MESSAGE = "В строке не должно быть пустых токенов";
@@ -37,8 +38,10 @@ public class CsvFileSourcedMeasurementConverterFactory<TWeight extends Number<TW
         Assert.isTrue(stream(row).noneMatch(String::isEmpty), EMPTY_TOKEN_MESSAGE);
       };
 
-  public CsvFileSourcedMeasurementConverterFactory(NumberFactory<TWeight> weightFactory) {
-    super(weightFactory);
+  public CsvFileSourcedMeasurementConverterFactory(
+      NumberFactory<TWeight> weightFactory,
+      ConversionGraphFactory<TWeight> conversionGraphFactory) {
+    super(weightFactory, conversionGraphFactory);
   }
 
   /**

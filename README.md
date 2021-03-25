@@ -57,9 +57,9 @@ java -jar target/universal-converter-1.0.0.jar metrics.csv
 В таком графе путь из `м` в `мм` имеет вес `1/1000` и означает, что в одном `м` содержится
 тысяча `мм`.
 
-Реализован в [MeasurementConverterImpl].
+Реализован в [ConversionGraph].
 
-[MeasurementConverterImpl]: src/main/java/com/github/jvmusin/universalconverter/converter/MeasurementConverterImpl.java
+[ConversionGraph]: src/main/java/com/github/jvmusin/universalconverter/converter/graph/ConversionGraph.java
 
 ### Сеть конвертаций
 
@@ -68,26 +68,29 @@ java -jar target/universal-converter-1.0.0.jar metrics.csv
 величины расстояния. Это величины не связаны между собой, а значит могут существовать отдельно друг
 от друга, каждая в своей сети конвертаций.
 
-Сеть конвертаций является связным графом. В каждой сети есть свой ***корневой элемент***. То, какой
-именно элемент сети будет выбран корневым, значения не имеет. Корневой элемент имеет вес **1**, а
-всем остальным элементам сети присвоен вес, пропорциональный весу корневого элемента, который может
-быть вычислен как произведение коэффициентов на рёбрах на пути из корневого элемента в конкретную
-величину измерения.
+Сеть конвертаций является связным графом. В каждой сети есть свой ***корневой элемент***. Корневым
+элементом может быть выбрана любая величина сети. Корневой элемент имеет вес **1**, а всем остальным
+элементам сети присвоен вес, пропорциональный весу корневого элемента, который может быть вычислен
+как произведение коэффициентов на рёбрах на пути из корневого элемента в конкретную величину
+измерения.
 
 Таким образом, если в сети существуют величины `м`, `см` и `мм`, а корневым элементом является `см`,
 то вес `см` равняется `1`, вес `м` равняется `100`, а вес `мм` равняется `1/10`.  
 Обратите внимание, что эта сеть *эквивалентна* той, что указана в разделе про графы конвертаций.
 
 После построения графа конвертаций, также строятся все сети конвертаций и для каждой величины
-измерения запоминается, какой сети она принадлежит и каков её вес в этой сети.
+измерения запоминается, какой сети она принадлежит и каков её вес в этой сети. Результат хранится в
+виде сущности типа [WeightedMeasurement].
 
 Построение сети конвертаций происходит с помощью обхода в ширину. Такой подход позволяет дойти от
 корневого элемента до всех остальных элементов, используя кратчайшие пути, а это, в свою очередь,
 заметно уменьшает накапливаемую погрешность весов в случайных графах.
 
-Реализован в [ConversionNetwork].
+Построение сетей и графа реализовано в [ConversionGraphFactory].
 
-[ConversionNetwork]: src/main/java/com/github/jvmusin/universalconverter/converter/network/ConversionNetwork.java
+[WeightedMeasurement]: src/main/java/com/github/jvmusin/universalconverter/converter/graph/WeightedMeasurement.java
+
+[ConversionGraphFactory]: src/main/java/com/github/jvmusin/universalconverter/converter/graph/ConversionGraphFactory.java
 
 ### Обработка запросов
 
@@ -214,23 +217,23 @@ Found**.
 
 Приложение:
 
-- Java 11
-- Lombok
-- Spring Boot 2.4.4 (Web)
-- Maven
+* Java 11
+* Lombok
+* Spring Boot 2.4.4 (Web)
+* Maven
 
 Тестирование:
 
-- Kotlin 1.4.32
-- Kotest 4.4.3
-- Spring Boot Test
-- Jackson 2.12.2
+* Kotlin 1.4.32
+* Kotest 4.4.3
+* Spring Boot Test
+* Jackson 2.12.2
 
 Инфрастуктура:
 
-- GitHub
-- Maven Build GitHub Action
-- Google Java Format GitHub Action
-- GitHub Dependabot
+* GitHub
+* Maven Build GitHub Action
+* Google Java Format GitHub Action
+* GitHub Dependabot
 
 Для управления зависимостями используется Maven.

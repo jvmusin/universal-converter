@@ -1,20 +1,20 @@
 package com.github.jvmusin.universalconverter.converter
 
-import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.doubles.plusOrMinus
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.throwable.shouldHaveCauseOfType
 import com.github.jvmusin.universalconverter.converter.exception.ConversionException
 import com.github.jvmusin.universalconverter.converter.exception.MismatchedDimensionalityException
 import com.github.jvmusin.universalconverter.converter.exception.NoSuchMeasurementException
 import com.github.jvmusin.universalconverter.fraction.ComplexFraction
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.doubles.plusOrMinus
+import io.kotest.matchers.should
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.throwable.haveCauseOfType
 
 class MeasurementConverterTests : StringSpec() {
-    private val converter = sampleConverter
 
     private fun convert(from: ComplexFraction<String>, to: ComplexFraction<String>): Double {
-        return converter.convert(from, to).value
+        return sampleMeasurementConverter.convertFractions(from, to).value
     }
 
     init {
@@ -49,47 +49,38 @@ class MeasurementConverterTests : StringSpec() {
         }
 
         "Минута в квадрате в секунду в квадрате возвращает 60*60" {
-            val from =
-                ComplexFraction(listOf("мин", "мин"), emptyList())
+            val from = ComplexFraction(listOf("мин", "мин"), emptyList())
             val to = ComplexFraction(listOf("с", "с"), emptyList())
             convert(from, to) shouldBe 60 * 60
         }
 
         "Секунда в квадрате в минуту в квадрате возвращает 1/60/60" {
             val from = ComplexFraction(listOf("с", "с"), emptyList())
-            val to =
-                ComplexFraction(listOf("мин", "мин"), emptyList())
+            val to = ComplexFraction(listOf("мин", "мин"), emptyList())
             convert(from, to) shouldBe 1.0 / 60 / 60
         }
 
         "Неравные размерности по обеим сторонам работают" {
-            val from = ComplexFraction(
-                listOf("с", "мм", "м"),
-                listOf("м", "мм")
-            )
+            val from = ComplexFraction(listOf("с", "мм", "м"), listOf("м", "мм"))
             val to = ComplexFraction(listOf("с", "м"), listOf("км"))
             convert(from, to) shouldBe 1000
         }
 
         "Из ничего в ничего работает" {
-            val from =
-                ComplexFraction<String>(emptyList(), emptyList())
-            val to =
-                ComplexFraction<String>(emptyList(), emptyList())
+            val from = ComplexFraction<String>(emptyList(), emptyList())
+            val to = ComplexFraction<String>(emptyList(), emptyList())
             convert(from, to) shouldBe 1
         }
 
         "Из ничего в м/км возвращает 1000" {
-            val from =
-                ComplexFraction<String>(emptyList(), emptyList())
+            val from = ComplexFraction<String>(emptyList(), emptyList())
             val to = ComplexFraction(listOf("м"), listOf("км"))
             convert(from, to) shouldBe 1000
         }
 
         "Из км/м в ничего возвращает 1000" {
             val from = ComplexFraction(listOf("км"), listOf("м"))
-            val to =
-                ComplexFraction<String>(emptyList(), emptyList())
+            val to = ComplexFraction<String>(emptyList(), emptyList())
             convert(from, to) shouldBe 1000
         }
 
@@ -144,8 +135,8 @@ class MeasurementConverterTests : StringSpec() {
         "Различные длины в числителе и знаменателе бросает MismatchedDimensionalityException, обёрнутый в ConversionException" {
             val from = ComplexFraction(listOf("м"), listOf("с"))
             val to = ComplexFraction(listOf("м", "м"), listOf("с"))
-            shouldThrow<ConversionException> { convert(from, to) }
-                .shouldHaveCauseOfType<MismatchedDimensionalityException>()
+            shouldThrow<ConversionException> { convert(from, to) } should
+                    haveCauseOfType<MismatchedDimensionalityException>()
         }
     }
 }
