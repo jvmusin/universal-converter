@@ -39,6 +39,6 @@ public class Controller {
   public String convert(@RequestBody ConvertMeasurementValuesRequest req) {
     ComplexFraction<String> from = req.fromFraction();
     ComplexFraction<String> to = req.toFraction();
-    return converter.convert(from, to).toString();
+    return converter.convertFractions(from, to).toString();
   }
 }

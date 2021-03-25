@@ -3,8 +3,13 @@ package com.github.jvmusin.universalconverter.converter.factory;
 import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
 import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraph;
+import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory;
 import com.github.jvmusin.universalconverter.number.Number;
+import com.github.jvmusin.universalconverter.number.NumberFactory;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.util.Assert;
 
 /**
  * Фабрика, используемая для создания {@link MeasurementConverter}.
@@ -13,7 +18,15 @@ import java.util.List;
  *
  * @param <TWeight> тип весов, используемых создаваемыми конвертерами.
  */
-public interface MeasurementConverterFactory<TWeight extends Number<TWeight>> {
+@RequiredArgsConstructor
+public class MeasurementConverterFactory<TWeight extends Number<TWeight>> {
+
+  /** Фабрика, используемая для создания весов типа {@link TWeight}. */
+  protected final NumberFactory<TWeight> weightFactory;
+
+  /** Фабрика, используемая для создания графов конвертации. */
+  private final ConversionGraphFactory<TWeight> conversionGraphFactory;
+
   /**
    * Создаёт {@link MeasurementConverter} на весах типа {@link TWeight} из правил конвертации {@code
    * conversionRules}.
@@ -23,5 +36,14 @@ public interface MeasurementConverterFactory<TWeight extends Number<TWeight>> {
    *     conversionRules}.
    * @throws MeasurementConverterBuildException при ошибке построения конвертера.
    */
-  MeasurementConverter<TWeight> create(List<ConversionRule<TWeight>> conversionRules);
+  public MeasurementConverter<TWeight> create(List<ConversionRule<TWeight>> conversionRules) {
+    try {
+      Assert.notNull(conversionRules, "Список правил равен null");
+      Assert.noNullElements(conversionRules, "В правилах конвертации присутствует null");
+      ConversionGraph<TWeight> conversionGraph = conversionGraphFactory.create(conversionRules);
+      return new MeasurementConverter<>(conversionGraph, weightFactory);
+    } catch (Exception e) {
+      throw new MeasurementConverterBuildException("Не удалось построить MeasurementConverter", e);
+    }
+  }
 }

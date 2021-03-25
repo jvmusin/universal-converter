@@ -3,7 +3,6 @@ package com.github.jvmusin.universalconverter.web;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
 import com.github.jvmusin.universalconverter.converter.factory.CsvFileSourcedMeasurementConverterFactory;
 import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory;
-import com.github.jvmusin.universalconverter.converter.network.ConversionNetworkFactory;
 import com.github.jvmusin.universalconverter.number.BigDecimalNumberFactory;
 import com.github.jvmusin.universalconverter.number.Number;
 import com.github.jvmusin.universalconverter.number.NumberFactory;
@@ -64,21 +63,16 @@ public class UniversalConverterApplication {
    */
   @Bean
   public <TWeight extends Number<TWeight>>
-      CsvFileSourcedMeasurementConverterFactory<TWeight> measurementConverterFactory(
+      CsvFileSourcedMeasurementConverterFactory<?> measurementConverterFactory(
           NumberFactory<TWeight> numberFactory,
-      ConversionNetworkFactory conversionNetworkFactory,
-      ConversionGraphFactory conversionGraphFactory) {
-    return new CsvFileSourcedMeasurementConverterFactory<>(numberFactory, conversionNetworkFactory, conversionGraphFactory);
+          ConversionGraphFactory<TWeight> conversionGraphFactory) {
+    return new CsvFileSourcedMeasurementConverterFactory<>(numberFactory, conversionGraphFactory);
   }
 
   @Bean
-  public ConversionGraphFactory conversionGraphFactory() {
-    return new ConversionGraphFactory();
-  }
-
-  @Bean
-  public ConversionNetworkFactory conversionNetworkFactory() {
-    return new ConversionNetworkFactory();
+  public <TWeight extends Number<TWeight>> ConversionGraphFactory<?> conversionGraphFactory(
+      NumberFactory<TWeight> weightFactory) {
+    return new ConversionGraphFactory<>(weightFactory);
   }
 
   /**
