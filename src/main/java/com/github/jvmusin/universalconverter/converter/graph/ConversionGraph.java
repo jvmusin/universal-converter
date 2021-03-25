@@ -11,6 +11,13 @@ import lombok.RequiredArgsConstructor;
  * свою очередь, содержит индекс сети конвертаций, которой принадлежит величина измерения, и её вес
  * в этой сети конвертаций.
  *
+ * <p>Для того, чтобы получить то, во сколько раз величина {@code A} больше величины {@code B},
+ * необходимо взять {@link #getMeasurement(String) getMeasurement(A).weight} и поделить на {@link
+ * #getMeasurement(String) getMeasurement(B).weight}.
+ *
+ * <p>Обратите внимание, что если величины относятся к различным сетям конвертации, то описанная
+ * выше операция бессмысленна.
+ *
  * @param <TWeight> тип весов, используемых в графе.
  */
 @RequiredArgsConstructor
