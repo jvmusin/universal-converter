@@ -10,6 +10,7 @@ import lombok.Data;
  */
 @Data
 public class ConvertMeasurementValuesRequest {
+
   /** Величина измерения, из которой нужно произвести конвертацию. */
   private final String from;
 

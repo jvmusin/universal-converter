@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.toList;
 
 import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
-import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
 import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory;
 import com.github.jvmusin.universalconverter.number.Number;
 import com.github.jvmusin.universalconverter.number.NumberFactory;

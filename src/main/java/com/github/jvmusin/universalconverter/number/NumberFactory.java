@@ -6,6 +6,7 @@ package com.github.jvmusin.universalconverter.number;
  * @param <TNumber> тип числа.
  */
 public interface NumberFactory<TNumber extends Number<TNumber>> {
+
   /**
    * Возвращает единицу типа {@link TNumber}.
    *

@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 import org.springframework.util.Assert;
 
 public class WebUtils {
+
   /**
    * Конвертирует выражение из запроса на конвертацию в дробь {@link ComplexFraction}.
    *

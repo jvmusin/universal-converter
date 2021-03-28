@@ -1,7 +1,6 @@
 package com.github.jvmusin.universalconverter.converter.factory
 
 import com.github.jvmusin.universalconverter.converter.conversionGraphFactory
-import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException
 import com.github.jvmusin.universalconverter.converter.weightFactory
 import com.github.jvmusin.universalconverter.fraction.ComplexFraction
 import io.kotest.assertions.throwables.shouldThrow

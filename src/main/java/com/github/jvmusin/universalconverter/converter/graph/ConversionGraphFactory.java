@@ -37,6 +37,7 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor
 public class ConversionGraphFactory<TWeight extends Number<TWeight>> {
 
+  /** Фабрика весов, используемая для построение графа. */
   private final NumberFactory<TWeight> weightFactory;
 
   /**

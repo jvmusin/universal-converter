@@ -22,6 +22,11 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 public class ConversionGraph<TWeight extends Number<TWeight>> {
+
+  /**
+   * Словарь, в котором для каждой величины измерения хранится информация в виде {@link
+   * WeightedMeasurement}.
+   */
   private final Map<String, WeightedMeasurement<TWeight>> measurements;
 
   /**
