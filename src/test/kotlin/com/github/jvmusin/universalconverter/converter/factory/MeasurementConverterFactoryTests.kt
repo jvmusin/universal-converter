@@ -1,6 +1,5 @@
 package com.github.jvmusin.universalconverter.converter.factory
 
-import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException
 import com.github.jvmusin.universalconverter.converter.measurementConverterFactory
 import com.github.jvmusin.universalconverter.converter.sampleRules
 import com.github.jvmusin.universalconverter.fraction.ComplexFraction

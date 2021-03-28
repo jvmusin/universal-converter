@@ -1,4 +1,4 @@
-package com.github.jvmusin.universalconverter.converter.exception;
+package com.github.jvmusin.universalconverter.converter.factory;
 
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
 

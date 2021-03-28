@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 /** Основной класс, запускающий {@code Spring Boot} приложение. */
 @SpringBootApplication
 public class UniversalConverterApplication {
+
   /**
    * Метод, запускающий приложение.
    *

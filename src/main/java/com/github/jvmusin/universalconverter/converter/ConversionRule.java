@@ -12,14 +12,18 @@ import lombok.Data;
  */
 @Data
 public class ConversionRule<TWeight extends Number<TWeight>> {
+
+  /** Название "большей" величины измерения. */
   private final String bigPiece;
+
+  /** Название "меньшей" величины измерения. */
   private final String smallPiece;
 
   /** Количество единиц {@code smallPiece} в одном {@code bigPiece}. */
   private final TWeight smallPieceCount;
 
   /**
-   * Создаёт обратное правило (из 'меньшей' величины в 'большую') с коэффициентом {@code
+   * Создаёт обратное правило ("большая" становится "меньшей" и наоборот) с коэффициентом {@code
    * 1/smallPieceCount}.
    *
    * @return Обратное правило.

@@ -2,7 +2,6 @@ package com.github.jvmusin.universalconverter.converter.factory;
 
 import com.github.jvmusin.universalconverter.converter.ConversionRule;
 import com.github.jvmusin.universalconverter.converter.MeasurementConverter;
-import com.github.jvmusin.universalconverter.converter.exception.MeasurementConverterBuildException;
 import com.github.jvmusin.universalconverter.converter.graph.ConversionGraph;
 import com.github.jvmusin.universalconverter.converter.graph.ConversionGraphFactory;
 import com.github.jvmusin.universalconverter.number.Number;

@@ -10,6 +10,7 @@ import java.util.function.Function;
 import org.springframework.util.Assert;
 
 public class ListUtils {
+
   /**
    * Сливает два списка в один новый список, в котором сначала идут элементы первого списка, затем
    * элементы второго списка, в том же порядке, в котором они шли изначально.

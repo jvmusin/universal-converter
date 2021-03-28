@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class Fraction<T> {
+
   /** Числитель. */
   private final T numerator;
 
