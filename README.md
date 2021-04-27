@@ -224,7 +224,7 @@ Found**.
 
 Тестирование:
 
-* Kotlin 1.4.32
+* Kotlin 1.5
 * Kotest 4.4.3
 * Spring Boot Test
 * Jackson 2.12.2
